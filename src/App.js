@@ -1,17 +1,49 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+
+import Header from './components/Header/Header';
+import Body from './components/Body/Body';
+
 import './App.css';
 
 function App() {
+  const [state, setState] = useState(5)
+
+  const changeState = () => {
+    console.log('zmieniam state');
+    setState(55)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        Ysana
-      </header>
+      <Header className="header"/>
+      <div className="container">
+        <Body chS={changeState} />
+      </div>
     </div>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // function App() {
