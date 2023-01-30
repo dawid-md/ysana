@@ -3,6 +3,14 @@
   font-size: x-;
 }
 
-.header {
-  background-color: #1a73e8
+.header{
+  background-color: #1a73e8;
+  color: white;
+  height: 150px;
+  align-items: center;
+  justify-content: center;
+}
+
+.h1xl{
+  font-size: 70px;
 }
