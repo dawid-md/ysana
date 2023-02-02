@@ -1,16 +1,24 @@
 .App {
   text-align: center;
-  font-size: x-;
+}
+
+.container-fluid, .col-2, .col-10 {
+  padding-right:0;
+  padding-left:0;
+}
+
+.dashboardColumn{
+  background-color: #1a202c;
 }
 
 .header{
   background-color: #1a73e8;
   color: white;
-  height: 150px;
+  height: 100px;
   align-items: center;
   justify-content: center;
 }
 
 .h1xl{
-  font-size: 70px;
+  font-size: 30px;
 }

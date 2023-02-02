@@ -6,18 +6,15 @@ import Body from './components/Body/Body';
 import './App.css';
 
 function App() {
-  const [state, setState] = useState(5)
-
-  const changeState = () => {
-    console.log('zmieniam state');
-    setState(55)
-  }
-
   return (
-    <div className="App">
-      <Header className="header"/>
-      <div className="container">
-        <Body chS={changeState} />
+    <div className="App container-fluid">
+      <div className='row'>
+        <div className='col-2 dashboardColumn'>
+        </div>
+        <div className='col-10'>
+          <Header className="header"/>
+          <Body />
+        </div>
       </div>
     </div>
   );

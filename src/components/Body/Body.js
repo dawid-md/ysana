@@ -1,23 +1,80 @@
 import axios from "axios"
 import { useState, useEffect } from "react";
+import Table from "./Table";
 
-export default function Body(props){
+const formTemplate = {
+    taskName: "",
+    assignee: "",
+    priority: "",
+    status: "",
+    project: ""
+}
+
+export default function Body(){
+    const [projects, setProjects] = useState([])
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] =useState(true)
+    const [addFormData, setAddFormData] = useState({formTemplate})
 
     async function getData(){
-        const res = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json')
+        const resProjects = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json')
+        const resTasks = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json')
+
+        const projectsData = []
+        for(const key in resProjects.data){
+            projectsData.push({...resProjects.data[key], id: key})
+        }
+        setProjects(projectsData)
+
         const tasksData = []
-        for(const key in res.data){
-            tasksData.push({...res.data[key], id: key})
+        for(const key in resTasks.data){
+            tasksData.push({...resTasks.data[key], id: key})
         }
         setTasks(tasksData)
+
         setLoading(false)
+    }
+
+    async function getProjectsData(){
+        const res = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json')
+        const projectsData = []
+        for(const key in res.data){
+            projectsData.push({...res.data[key], id: key})
+        }
+        setProjects(projectsData)
+    }
+
+    async function insertTaskData(){
+        const res = await axios.post('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', addFormData)
+        getData()
+        document.getElementById("addTaskForm").reset()
+        setAddFormData(formTemplate)
+    }
+
+    async function insertProjectData(){
+        const res = await axios.post('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json', projects)
+    }
+
+    async function removeTask(taskID){
+        const res = await axios.delete(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskID}.json`)
+        getData()
     }
 
     useEffect(() => {
         getData()
     }, [])
+
+    function handleAddFormChange(event){
+        event.preventDefault()
+
+        const fieldName = event.target.getAttribute("name")
+        const fieldValue = event.target.value
+
+        const newFormData = { ...addFormData }
+        newFormData[fieldName] = fieldValue
+
+        setAddFormData(newFormData)
+    }
     
     return(
         loading ? 
@@ -28,28 +85,51 @@ export default function Body(props){
             </div>
         :
             <div>
-                <table className="table">
-                    <thead>
-                        <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Task</th>
-                        <th scope="col">Assignee</th>
-                        <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            tasks.map(task => 
-                                <tr key={task.id}>
-                                    <td>{task.id}</td>
-                                    <td>{task.taskName}</td>
-                                    <td>{task.assignee}</td>
-                                    <td>{task.status}</td>
-                                </tr>
-                                )
-                        }
-                    </tbody>
-                </table>
+                {/* <Table tasks={tasks} removeTask={removeTask} /> */}
+
+                {projects.map(pro => 
+                    <Table project={pro.projectName} tasks={tasks} removeTask={removeTask} />
+                )}
+
+                <form id="addTaskForm">
+                    <input 
+                      type="text"
+                      name="taskName"
+                      required="required"
+                      placeholder="task name"
+                      onChange={handleAddFormChange}
+                    />
+                    <input 
+                      type="text"
+                      name="assignee"
+                      required="required"
+                      placeholder="person assigned"
+                      onChange={handleAddFormChange}
+                    />
+                    <input 
+                      type="text"
+                      name="priority"
+                      required="required"
+                      placeholder="priority"
+                      onChange={handleAddFormChange}
+                    />
+                    <input 
+                      type="text"
+                      name="status"
+                      required="required"
+                      placeholder="status"
+                      onChange={handleAddFormChange}
+                    />
+                    <input 
+                      type="text"
+                      name="project"
+                      required="required"
+                      placeholder="project"
+                      onChange={handleAddFormChange}
+                    />
+                </form>
+                <button onClick={insertTaskData} className="btn btn-primary my-2">Submit</button>
+                {/* <button onClick={insertProjectData} className="btn btn-success my-2 mx-2">Add Project</button> */}
             </div>
     )
 }
