@@ -10,6 +10,10 @@ const formTemplate = {
     project: ""
 }
 
+const newProject = {
+    projectName: "MMK"
+}
+
 export default function Body(){
     const [projects, setProjects] = useState([])
     const [tasks, setTasks] = useState([])
@@ -52,7 +56,7 @@ export default function Body(){
     }
 
     async function insertProjectData(){
-        const res = await axios.post('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json', projects)
+        const res = await axios.post('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json', newProject)
     }
 
     async function removeTask(taskID){
@@ -75,7 +79,7 @@ export default function Body(){
 
         setAddFormData(newFormData)
     }
-    
+
     return(
         loading ? 
             <div className="d-flex justify-content-center my-1">
@@ -84,11 +88,11 @@ export default function Body(){
                 </div>
             </div>
         :
-            <div>
+            <div className="text-center">
                 {/* <Table tasks={tasks} removeTask={removeTask} /> */}
 
                 {projects.map(pro => 
-                    <Table project={pro.projectName} tasks={tasks} removeTask={removeTask} />
+                    <Table key={pro.id} project={pro.projectName} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} />
                 )}
 
                 <form id="addTaskForm">
@@ -129,7 +133,7 @@ export default function Body(){
                     />
                 </form>
                 <button onClick={insertTaskData} className="btn btn-primary my-2">Submit</button>
-                {/* <button onClick={insertProjectData} className="btn btn-success my-2 mx-2">Add Project</button> */}
+                <button onClick={insertProjectData} className="btn btn-success my-2 mx-2">Add Project</button>
             </div>
     )
 }

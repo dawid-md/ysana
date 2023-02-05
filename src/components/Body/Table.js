@@ -15,7 +15,7 @@ export default function Table({ project, tasks, removeTask }){
                 </tr>
             </thead>
             <tbody>
-                {
+                { 
                 tasks.map(task => 
                     <tr key={task.id}>
                         <td>{task.id}</td>

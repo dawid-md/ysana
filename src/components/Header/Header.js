@@ -5,7 +5,7 @@ export default function Header(props){
                 <h1 className="h1xl">Ysana Capgemini</h1>
             </div>
             <div>
-            </div>
+            </div> 
         </>
     )
 }
