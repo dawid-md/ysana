@@ -1,0 +1,33 @@
+.App {
+  display: flex;
+  height: 100vh;
+}
+
+.header{
+  height: 8%;
+  border: 1px solid black;
+  display: flex;
+}
+
+.header h2{
+  align-self: flex-end;
+  margin-left: 0.5%;
+}
+
+.left-panel {
+  width: 12.5%;
+  background-color: #1a202c;
+}
+
+.main-content {
+  flex: 1;
+}
+
+/* .container-fluid, .col-2, .col-10 {
+  padding-right:0;
+  padding-left:0;
+}
+
+.dashboardColumn{
+  background-color: #1a202c;
+} */
