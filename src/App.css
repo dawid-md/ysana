@@ -1,12 +1,10 @@
 .App {
-  display: flex;
   height: 100vh;
 }
 
 .header{
   height: 8%;
-  border: 1px solid black;
-  display: flex;
+  border: 1px solid rgb(135, 135, 135);
 }
 
 .header h2{
@@ -17,6 +15,7 @@
 .left-panel {
   width: 12.5%;
   background-color: #1a202c;
+  justify-content: center;
 }
 
 .main-content {

@@ -2,23 +2,22 @@ import Header from './components/Header/Header';
 import Body from './components/Body/Body';
 
 import './App.css';
+import Register from './components/Register/Register';
 
 function App() {
   return (
-    <div className="App align-text-bottom">
-      <div className="left-panel">
-        <nav>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
+    <div className="App d-flex">
+      <div className="left-panel d-flex">
+        <nav className="nav flex-column mt-4">
+          <a className="nav-link active" aria-current="page" href="#">Home</a>
+          <a className="nav-link" href="#">Settings</a>
+          <a className="nav-link" href="#">Register</a>
         </nav>
       </div>
       <div className="main-content">
         <Header />
         <Body />
+        <Register />
       </div>
     </div>
   );
