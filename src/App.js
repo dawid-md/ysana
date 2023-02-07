@@ -1,24 +1,25 @@
 import Header from './components/Header/Header';
 import Body from './components/Body/Body';
-
-import './App.css';
 import Register from './components/Register/Register';
+import Panel from './components/Panel/Panel';
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './components/Login/Login';
 
 function App() {
   return (
     <div className="App d-flex">
-      <div className="left-panel d-flex">
-        <nav className="nav flex-column mt-4">
-          <a className="nav-link active" aria-current="page" href="#">Home</a>
-          <a className="nav-link" href="#">Settings</a>
-          <a className="nav-link" href="#">Register</a>
-        </nav>
-      </div>
-      <div className="main-content">
-        <Header />
-        <Body />
-        <Register />
-      </div>
+      <BrowserRouter>
+        <Panel />
+        <div className="page-content">
+          <Header />
+          <Routes>
+            <Route path="/" element={<Body />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </div>
   );
 }

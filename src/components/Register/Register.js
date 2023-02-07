@@ -1,8 +1,11 @@
 import axios from "axios"
 import { useState } from "react"
+import useAuth from "../../hooks/useAuth"
+import { useNavigate } from 'react-router-dom'
 
 export default function Register(){
-
+    //const navigate = useNavigate()
+    const [auth, setAuth] = useAuth(); 
     const [userCredentials, setuserCredentials] = useState({
         email: {
             value: "",
@@ -35,19 +38,23 @@ export default function Register(){
             returnSecureToken: true
         })
         console.log(res.data);
+        setAuth(true, res.data)
     }
 
     return(
-        <form>
-        <div className="mb-3 col-3">
-            <label className="form-label">Email address</label>
-            <input onChange={changeCredentials} name="email" type="email" className="form-control" />
-        </div>
-        <div className="mb-3 col-3">
-            <label className="form-label">Password</label>
-            <input onChange={changeCredentials} name="password" type="password" className="form-control"/>
-        </div>
-        <button onClick={submit} type="submit" className="btn btn-primary">Submit</button>
-        </form>
+        <>
+            <h2>Register User</h2>
+            <form>
+            <div className="mb-3 col-3">
+                <label className="form-label">Email address</label>
+                <input onChange={changeCredentials} name="email" type="email" className="form-control" />
+            </div>
+            <div className="mb-3 col-3">
+                <label className="form-label">Password</label>
+                <input onChange={changeCredentials} name="password" type="password" className="form-control"/>
+            </div>
+            <button onClick={submit} type="submit" className="btn btn-primary">Submit</button>
+            </form>
+        </>
     )
 }
