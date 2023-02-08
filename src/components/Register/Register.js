@@ -1,11 +1,15 @@
 import axios from "axios"
 import { useState } from "react"
-import useAuth from "../../hooks/useAuth"
-import { useNavigate } from 'react-router-dom'
+//import useAuth from "../../hooks/useAuth"
+import AuthContext from "../../context/AuthContext"
+import { useContext } from "react"
 
 export default function Register(){
-    //const navigate = useNavigate()
-    const [auth, setAuth] = useAuth(); 
+    //const [auth, setAuth] = useAuth(); 
+
+    const { isAuthenticated, setAuth } = useContext(AuthContext)
+    console.log(isAuthenticated);
+
     const [userCredentials, setuserCredentials] = useState({
         email: {
             value: "",
@@ -38,7 +42,9 @@ export default function Register(){
             returnSecureToken: true
         })
         console.log(res.data);
-        setAuth(true, res.data)
+        setAuth(true)
+        //setAuth(true, res.data)
+        console.log(isAuthenticated);
     }
 
     return(
