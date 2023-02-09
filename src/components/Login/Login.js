@@ -30,17 +30,17 @@ export default function Login(){
     const submit = async (e) =>{
         e.preventDefault()
 
-        try{
-        const res = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
-            {email: userCredentials.email,
-            password: userCredentials.password,
-            returnSecureToken: true
-        })
-        console.log(res);
-        setAuth(true, res.data)
-        } catch (ex) {
-            console.log(ex.response);
-        }
+        //try{
+            const res = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
+                {email: userCredentials.email,
+                password: userCredentials.password,
+                returnSecureToken: true
+            })
+            console.log('axios res.data', res.data);
+            setAuth(true, res.data)
+        //} catch (ex) {
+            //console.log(ex.response);
+        //}
     }
 
     return(

@@ -4,13 +4,28 @@ import Register from './components/Register/Register'
 import Login from './components/Login/Login'
 import Panel from './components/Panel/Panel'
 import './App.css'
+import { useEffect, useContext } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { AuthProvider } from './context/AuthContext'
+import AuthContext from './context/AuthContext'
 
 function App() {
+  const { isAuthenticated, setAuth } = useContext(AuthContext)
+
+  const checkUser = () => {
+    const tokenData = window.localStorage.getItem('token-data')
+    console.log('checkuser', isAuthenticated, tokenData);
+    if(tokenData){
+      console.log('useeffect', tokenData);
+      setAuth(true)
+    }
+  }
+
+  useEffect(() => {
+    checkUser()
+  }, [])
+
   return (
     <div className="App d-flex">
-      <AuthProvider>
         <BrowserRouter>
             <Panel />
             <div className="page-content">
@@ -22,7 +37,6 @@ function App() {
               </Routes>
             </div>
         </BrowserRouter>
-      </AuthProvider>
     </div>
   );
 }

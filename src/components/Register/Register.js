@@ -1,7 +1,6 @@
 import axios from "axios"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import AuthContext from "../../context/AuthContext"
-import { useContext } from "react"
 
 export default function Register(){
     const { isAuthenticated, setAuth } = useContext(AuthContext)

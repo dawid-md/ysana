@@ -5,21 +5,26 @@ const AuthContext = createContext({})
 export function AuthProvider({ children }){
     const [isAuthenticated, setisAuthenticated] = useState(false)
 
-    const setAuth = (authValue, tokenData = null) => {
-        setisAuthenticated(authValue)
-        console.log(tokenData);
+    const setAuth = (authenticateValue = false, tokenData = null) => {
+        console.log('authvalue received:', authenticateValue);
 
-        if (isAuthenticated && tokenData) {
-            console.log(tokenData);
+        if (authenticateValue) {
+            console.log('Sign in');
+            setisAuthenticated(true)
+        }
+        if (tokenData) {
+            console.log('setting local storage', tokenData);
             window.localStorage.setItem('token-data', JSON.stringify(tokenData))
         }
-        else {
-            //window.localStorage.removeItem('token-data')
+        if (authenticateValue == false) {
+            console.log('Sign out');
+            setisAuthenticated(false)
+            window.localStorage.removeItem('token-data')
         }
     }
 
     return(
-        <AuthContext.Provider value={{ isAuthenticated: isAuthenticated, setAuth }}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{ isAuthenticated, setAuth }}>{children}</AuthContext.Provider>
     )
 }
 

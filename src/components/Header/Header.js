@@ -16,3 +16,6 @@ export default function Header(){
         </>
     )
 }
+
+// {isAuthenticated ? <button className="btn btn-warning my-2">Sign Out</button>
+// : <button className="btn btn-warning my-2">Sign In</button>}
