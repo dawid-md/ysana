@@ -5,8 +5,17 @@ const AuthContext = createContext({})
 export function AuthProvider({ children }){
     const [isAuthenticated, setisAuthenticated] = useState(false)
 
-    const setAuth = (authValue) => {
+    const setAuth = (authValue, tokenData = null) => {
         setisAuthenticated(authValue)
+        console.log(tokenData);
+
+        if (isAuthenticated && tokenData) {
+            console.log(tokenData);
+            window.localStorage.setItem('token-data', JSON.stringify(tokenData))
+        }
+        else {
+            //window.localStorage.removeItem('token-data')
+        }
     }
 
     return(
@@ -15,13 +24,3 @@ export function AuthProvider({ children }){
 }
 
 export default AuthContext
-
-// import React from "react"
-
-// const AuthContext = React.createContext({
-//     isAuthenticated: false,
-//     login: () => {},
-//     logout: () => {}
-// })
-
-// export default AuthContext

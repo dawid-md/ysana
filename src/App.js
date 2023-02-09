@@ -1,29 +1,27 @@
-import Header from './components/Header/Header';
-import Body from './components/Body/Body';
-import Register from './components/Register/Register';
-import Panel from './components/Panel/Panel';
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from './components/Login/Login';
-//import AuthContext from './context/AuthContext';
-import { useContext } from 'react';
+import Header from './components/Header/Header'
+import Body from './components/Body/Body'
+import Register from './components/Register/Register'
+import Login from './components/Login/Login'
+import Panel from './components/Panel/Panel'
+import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 
 function App() {
   return (
     <div className="App d-flex">
       <AuthProvider>
-      <BrowserRouter>
-          <Panel />
-          <div className="page-content">
-            <Header />
-            <Routes>
-              <Route path="/" element={<Body />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-            </Routes>
-          </div>
-      </BrowserRouter>
+        <BrowserRouter>
+            <Panel />
+            <div className="page-content">
+              <Header />
+              <Routes>
+                <Route path="/" element={<Body />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+              </Routes>
+            </div>
+        </BrowserRouter>
       </AuthProvider>
     </div>
   );
