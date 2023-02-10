@@ -13,9 +13,8 @@ function App() {
 
   const checkUser = () => {
     const tokenData = window.localStorage.getItem('token-data')
-    console.log('checkuser', isAuthenticated, tokenData);
     if(tokenData){
-      console.log('useeffect', tokenData);
+      console.log(tokenData);
       setAuth(true)
     }
   }

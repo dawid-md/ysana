@@ -30,14 +30,21 @@ export default function Register(){
     const submit = async (e) =>{
         e.preventDefault()
 
-        const res = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
-            {email: userCredentials.email,
-            password: userCredentials.password,
-            returnSecureToken: true
-        })
-        console.log(res.data);
-        setAuth(true, res.data)
-        console.log(isAuthenticated);
+        try{
+            const res = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
+                {email: userCredentials.email,
+                password: userCredentials.password,
+                returnSecureToken: true
+            })
+            setAuth(true, {
+                email: res.data.email,
+                token: res.data.idToken,
+                refreshToken: res.data.refreshToken,
+                userID: res.data.localId
+            })
+        } catch (ex) {
+            console.log(ex.response);
+        }
     }
 
     return(
