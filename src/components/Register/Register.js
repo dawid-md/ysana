@@ -48,19 +48,21 @@ export default function Register(){
     }
 
     return(
-        <>
-            <h2>Register User</h2>
+        <div>
+            <h2 className="text-center">Register</h2>
             <form>
-            <div className="mb-3 col-3">
+            <div className="mb-3 col-3 mx-auto">
                 <label className="form-label">Email address</label>
                 <input onChange={changeCredentials} name="email" type="email" className="form-control" />
             </div>
-            <div className="mb-3 col-3">
+            <div className="mb-3 col-3 mx-auto">
                 <label className="form-label">Password</label>
                 <input onChange={changeCredentials} name="password" type="password" className="form-control"/>
             </div>
-            <button onClick={submit} type="submit" className="btn btn-primary">Submit</button>
+            <div className="text-center">
+                <button onClick={submit} type="submit" className="btn btn-primary btn-lg mx-22">Submit</button>
+            </div>
             </form>
-        </>
+        </div>
     )
 }

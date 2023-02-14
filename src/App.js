@@ -9,13 +9,14 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AuthContext from './context/AuthContext'
 
 function App() {
-  const { isAuthenticated, setAuth } = useContext(AuthContext)
+  const { isAuthenticated, setAuth, setUser } = useContext(AuthContext)
 
   const checkUser = () => {
     const tokenData = window.localStorage.getItem('token-data')
     if(tokenData){
-      console.log(tokenData);
+      console.log(JSON.parse(tokenData));
       setAuth(true)
+      setUser(tokenData)
     }
   }
 
@@ -41,26 +42,6 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // function App() {

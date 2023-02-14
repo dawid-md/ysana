@@ -36,7 +36,7 @@ export default function Login(){
                 password: userCredentials.password,
                 returnSecureToken: true
             })
-            console.log('axios res.data', res.data);
+            console.log('zalogowano: res.data', res.data);
             setAuth(true, {
                 email: res.data.email,
                 token: res.data.idToken,
