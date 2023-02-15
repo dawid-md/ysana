@@ -19,6 +19,7 @@ export function AuthProvider({ children }){
         }
         if (tokenData) {
             window.localStorage.setItem('token-data', JSON.stringify(tokenData))
+            //setCurrentUser(tokenData)
         }
         if (authenticateValue == false) {
             setisAuthenticated(false)
@@ -28,13 +29,13 @@ export function AuthProvider({ children }){
 
     const setUser = async (tokenData = null) => {
         let userData = JSON.parse(tokenData)
-        let userNameResponse = await getUserName(userData.token, userData.refreshToken, false, "")
+        let userNameResponse = await getUserName(userData.token, userData.refreshToken, false)  //, ""
         if(userNameResponse[0] == 200){
             userData.displayName = userNameResponse[1]
             setCurrentUser({...userData})
         }
         else if (userNameResponse[0] == 400){
-            let dataByRefreshedToken = await getUserName(userNameResponse[1], null, true)    //try by new token
+            let dataByRefreshedToken = await getUserName(userNameResponse[1], null, true)    // , "" try by new token
             userData.token = userNameResponse[1]
             userData.displayName = dataByRefreshedToken[1]
             setAuth(true, userData)
@@ -46,10 +47,10 @@ export function AuthProvider({ children }){
         }
     }
 
-    const getUserName = async (token, refreshTokenID, lastCheck = false, addtest = "") => {
+    const getUserName = async (token, refreshTokenID, lastCheck = false) => {   //, addtest = ""
         try {
             const res = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
-                {idToken: token + addtest})
+                {idToken: token}) // + ""
                 return [res.status, res.data.users[0].displayName]
         }
         catch (ex) {
@@ -67,7 +68,7 @@ export function AuthProvider({ children }){
             const res = await axios.post("https://securetoken.googleapis.com/v1/token?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
                 {grant_type: "refresh_token",
                  refresh_token: refreshTokenID})
-            return [res.data.id_token]
+            return res.data.id_token
         }
         catch (ex) {
             console.log("nieudana reautentykacja ", ex.response);

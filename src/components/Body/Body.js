@@ -89,7 +89,6 @@ export default function Body(){
             </div>
         :
             <div className="text-center">
-                {/* <Table tasks={tasks} removeTask={removeTask} /> */}
 
                 {projects.map(pro => 
                     <Table key={pro.id} project={pro.projectName} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} />
@@ -131,6 +130,17 @@ export default function Body(){
                       placeholder="project"
                       onChange={handleAddFormChange}
                     />
+                    <select className="">
+                        {projects.map(pro => 
+                            <option key={pro.id} value={pro.id}>{pro.projectName}</option>
+                        )}
+                    </select>
+                      {/* <select id="cars" name="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="fiat" selected>Fiat</option>
+                            <option value="audi">Audi</option>
+                        </select> */}
                 </form>
                 <button onClick={insertTaskData} className="btn btn-primary my-2">Submit</button>
                 <button onClick={insertProjectData} className="btn btn-success my-2 mx-2">Add Project</button>

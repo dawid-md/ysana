@@ -12,19 +12,25 @@ export default function Panel(){
                 <span className="nav-link">Home</span>
             </Link>
             <Link to={"/"}>
+                <span className="nav-link">My Tasks</span>
+            </Link>
+            <Link to={"/"}>
+                <span className="nav-link">Inbox</span>
+            </Link>
+            <Link to={"/"}>
                 <span className="nav-link">Settings</span>
             </Link>
             {!isAuthenticated ? 
-            <div>
+            <>
                 <Link to={"/login"}>
                     <span className="nav-link">Login</span>
                 </Link>
                 <Link to={"/register"}>
                     <span className="nav-link">Register</span>
                 </Link>
-            </div> : null
+            </>
+             : null 
             }
-
             </nav>
         </div>
     )

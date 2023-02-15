@@ -5,7 +5,7 @@ export default function Table({ project, tasks, removeTask }){
         <table className="table">
             <thead>
                 <tr>
-                <th scope="col">ID</th>
+                {/* <th scope="col">ID</th> */}
                 <th scope="col">Task</th>
                 <th scope="col">Assignee</th>
                 <th scope="col">Priority</th>
@@ -18,7 +18,7 @@ export default function Table({ project, tasks, removeTask }){
                 { 
                 tasks.map(task => 
                     <tr key={task.id}>
-                        <td>{task.id}</td>
+                        {/* <td>{task.id}</td> */}
                         <td>{task.taskName}</td>
                         <td>{task.assignee}</td>
                         <td>{task.priority}</td>

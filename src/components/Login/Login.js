@@ -1,8 +1,10 @@
 import axios from "axios"
 import { useState, useContext } from "react"
 import AuthContext from "../../context/AuthContext"
+import { useNavigate } from "react-router-dom"
 
 export default function Login(){
+    const navigate = useNavigate()
     const { isAuthenticated, setAuth } = useContext(AuthContext)
     const [userCredentials, setuserCredentials] = useState({
         email: {
@@ -41,8 +43,10 @@ export default function Login(){
                 email: res.data.email,
                 token: res.data.idToken,
                 refreshToken: res.data.refreshToken,
-                userID: res.data.localId
+                userID: res.data.localId,
+                //displayName: res.data.displayName
             })
+            navigate('/')
         } catch (ex) {
             console.log(ex.response);
         }

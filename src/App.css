@@ -3,13 +3,16 @@
 }
 
 .header{
-  height: 8%;
+  height: 6%;
   border-bottom: 1px solid rgb(135, 135, 135);
 }
 
-.header h2{
+.header > *{
   align-self: flex-end;
-  margin-left: 0.5%;
+}
+
+.header > h2:last-child{
+  margin-left: auto;
 }
 
 .left-panel {

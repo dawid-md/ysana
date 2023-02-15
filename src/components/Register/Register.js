@@ -40,7 +40,8 @@ export default function Register(){
                 email: res.data.email,
                 token: res.data.idToken,
                 refreshToken: res.data.refreshToken,
-                userID: res.data.localId
+                userID: res.data.localId,
+                //displayName: res.data.displayName
             })
         } catch (ex) {
             console.log(ex.response);
