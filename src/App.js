@@ -7,6 +7,7 @@ import './App.css'
 import { useEffect, useContext } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AuthContext from './context/AuthContext'
+import MyTasks from './components/MyTasks/MyTasks'
 
 function App() {
   const { isAuthenticated, setAuth, setUser } = useContext(AuthContext)
@@ -32,6 +33,7 @@ function App() {
               <Header />
               <Routes>
                 <Route path="/" element={<Body />} />
+                <Route path="/mytasks" element={<MyTasks />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
               </Routes>

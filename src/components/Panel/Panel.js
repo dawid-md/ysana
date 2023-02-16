@@ -11,7 +11,7 @@ export default function Panel(){
             <Link to={"/"}>
                 <span className="nav-link">Home</span>
             </Link>
-            <Link to={"/"}>
+            <Link to={"/mytasks"}>
                 <span className="nav-link">My Tasks</span>
             </Link>
             <Link to={"/"}>

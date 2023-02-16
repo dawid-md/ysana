@@ -134,6 +134,7 @@ export default function Body(){
                         {projects.map(pro => 
                             <option key={pro.id} value={pro.id}>{pro.projectName}</option>
                         )}
+                        <option key="1" value="1">Private</option>
                     </select>
                       {/* <select id="cars" name="cars">
                             <option value="volvo">Volvo</option>

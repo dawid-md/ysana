@@ -13,9 +13,6 @@ export default function Header(){
                     : <button onClick={() => setAuth(true)} className="btn btn-light btn-sm">Sign In</button>}
                 <h2>{isAuthenticated ? currentUser.displayName : null}</h2>
             </div>
-            <div>
-                lele
-            </div>
         </>
     )
 }
