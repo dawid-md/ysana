@@ -54,7 +54,7 @@ export function AuthProvider({ children }){
                 return [res.status, res.data.users[0].displayName]
         }
         catch (ex) {
-            if((ex.response.data.error.message == "INVALID_ID_TOKEN") && lastCheck == false){
+            if((ex.response.data.error.message === "INVALID_ID_TOKEN") && lastCheck == false){
                 let refreshTokenResponse = await refreshUserToken(refreshTokenID)
                 console.log('new token', refreshTokenResponse);
                 return [400, refreshTokenResponse]

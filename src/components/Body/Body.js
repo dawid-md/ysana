@@ -10,14 +10,10 @@ const formTemplate = {
     project: ""
 }
 
-const newProject = {
-    projectName: "MMK"
-}
-
 export default function Body(){
     const [projects, setProjects] = useState([])
     const [tasks, setTasks] = useState([])
-    const [loading, setLoading] =useState(true)
+    const [loading, setLoading] = useState(true)
     const [addFormData, setAddFormData] = useState({formTemplate})
 
     async function getData(){
@@ -35,17 +31,7 @@ export default function Body(){
             tasksData.push({...resTasks.data[key], id: key})
         }
         setTasks(tasksData)
-
         setLoading(false)
-    }
-
-    async function getProjectsData(){
-        const res = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json')
-        const projectsData = []
-        for(const key in res.data){
-            projectsData.push({...res.data[key], id: key})
-        }
-        setProjects(projectsData)
     }
 
     async function insertTaskData(){
@@ -53,10 +39,6 @@ export default function Body(){
         getData()
         document.getElementById("addTaskForm").reset()
         setAddFormData(formTemplate)
-    }
-
-    async function insertProjectData(){
-        const res = await axios.post('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json', newProject)
     }
 
     async function removeTask(taskID){
@@ -78,6 +60,13 @@ export default function Body(){
         newFormData[fieldName] = fieldValue
 
         setAddFormData(newFormData)
+    }
+
+    function handleSelect(event){
+        event.preventDefault()
+
+        const field = event.target.value
+        console.log(field);
     }
 
     return(
@@ -130,21 +119,20 @@ export default function Body(){
                       placeholder="project"
                       onChange={handleAddFormChange}
                     />
-                    <select className="">
+                    <select onChange={handleSelect}>
+                        <option 
+                            key="s1" 
+                            value=""></option>
                         {projects.map(pro => 
-                            <option key={pro.id} value={pro.id}>{pro.projectName}</option>
+                            <option 
+                                key={pro.id} 
+                                value={pro.projectName}>
+                                    {pro.projectName}</option>
                         )}
                         <option key="1" value="1">Private</option>
                     </select>
-                      {/* <select id="cars" name="cars">
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="fiat" selected>Fiat</option>
-                            <option value="audi">Audi</option>
-                        </select> */}
                 </form>
                 <button onClick={insertTaskData} className="btn btn-primary my-2">Submit</button>
-                <button onClick={insertProjectData} className="btn btn-success my-2 mx-2">Add Project</button>
             </div>
     )
 }

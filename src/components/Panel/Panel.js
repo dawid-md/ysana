@@ -20,6 +20,9 @@ export default function Panel(){
             <Link to={"/"}>
                 <span className="nav-link">Settings</span>
             </Link>
+            <Link to={"/projects"}>
+                <span className="nav-link">Projects</span>
+            </Link>
             {!isAuthenticated ? 
             <>
                 <Link to={"/login"}>

@@ -8,6 +8,7 @@ import { useEffect, useContext } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AuthContext from './context/AuthContext'
 import MyTasks from './components/MyTasks/MyTasks'
+import Projects from './components/Projects/Projects'
 
 function App() {
   const { isAuthenticated, setAuth, setUser } = useContext(AuthContext)
@@ -15,7 +16,7 @@ function App() {
   const checkUser = () => {
     const tokenData = window.localStorage.getItem('token-data')
     if(tokenData){
-      console.log(JSON.parse(tokenData));
+      //console.log(JSON.parse(tokenData));
       setAuth(true)
       setUser(tokenData)
     }
@@ -36,6 +37,7 @@ function App() {
                 <Route path="/mytasks" element={<MyTasks />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/projects" element={<Projects />} />
               </Routes>
             </div>
         </BrowserRouter>
