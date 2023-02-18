@@ -1,9 +1,14 @@
+import { useState, Fragment } from "react";
+import EditableRow from "./EditableRow";
 import ReadOnlyRow from "./ReadOnlyRow";
 
 export default function Table({ project, tasks, removeTask }){
+    const [editTaskId, setEditTaskId] = useState(null)
+
     return(
         <>
         <div>{project}</div>
+        <form>
         <table className="table">
             <thead>
                 <tr>
@@ -13,17 +18,22 @@ export default function Table({ project, tasks, removeTask }){
                 <th scope="col">Priority</th>
                 <th scope="col">Status</th>
                 <th scope="col">Project</th>
-                <th scope="col"></th>
+                <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 { 
                 tasks.map(task => 
-                    <ReadOnlyRow key={task.id} task={task} />
+                    <Fragment key={task.id}>
+                        {editTaskId === task.id ? <EditableRow changeTaskId={setEditTaskId} /> 
+                                    : <ReadOnlyRow changeTaskId={setEditTaskId} task={task} />
+                        }
+                    </Fragment>
                 )
                 }
             </tbody>
         </table>
+        </form>
         </>
     )
 }

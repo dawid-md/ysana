@@ -14,7 +14,7 @@ export default function Body(){
     const [projects, setProjects] = useState([])
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true)
-    const [addFormData, setAddFormData] = useState({formTemplate})
+    const [addFormData, setAddFormData] = useState(formTemplate)
 
     async function getData(){
         const resProjects = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json')
