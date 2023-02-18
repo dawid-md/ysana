@@ -77,7 +77,7 @@ export default function Body(){
                 </div>
             </div>
         :
-            <div className="text-center">
+            <div className="main-div text-center">
 
                 {projects.map(pro => 
                     <Table key={pro.id} project={pro.projectName} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} />

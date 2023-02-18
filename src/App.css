@@ -2,9 +2,15 @@
   height: 100vh;
 }
 
+.main-div{
+  background-color: rgb(255, 243, 227);
+}
+
 .header{
   height: 6%;
+  color: white;
   border-bottom: 1px solid rgb(135, 135, 135);
+  background-color: #1a202c;
 }
 
 .header > *{
@@ -21,6 +27,28 @@
   justify-content: center;
 }
 
+.nav-link, a{
+  color: white;
+  text-decoration: none;
+}
+
 .page-content {
   flex: 1;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #000268;
+  text-align: left;
+  width: 12%;
+  /* padding: 8px; */
+  /* font-size: 32px; */
+}
+
+tr {
+  line-height: 20px;
 }

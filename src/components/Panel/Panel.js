@@ -3,7 +3,7 @@ import { useContext } from "react"
 import AuthContext from "../../context/AuthContext"
 
 export default function Panel(){
-    const { isAuthenticated } = useContext(AuthContext)
+    const { isAuthenticated, setAuth } = useContext(AuthContext)
 
     return(
         <div className="left-panel d-flex">
@@ -32,7 +32,9 @@ export default function Panel(){
                     <span className="nav-link">Register</span>
                 </Link>
             </>
-             : null 
+             : <Link to={"/login"}>
+                 <span className="nav-link" onClick={() => setAuth(false)}>Sign out</span>
+               </Link>
             }
             </nav>
         </div>

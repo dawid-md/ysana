@@ -9,8 +9,6 @@ export default function Header(){
         <>
             <div className="header d-flex">
                 <h2>Tasks</h2>
-                {isAuthenticated ? <button onClick={() => setAuth(false)} className="btn btn-light btn-sm">Sign Out</button>
-                    : <button onClick={() => setAuth(true)} className="btn btn-light btn-sm">Sign In</button>}
                 <h2>{isAuthenticated ? currentUser.displayName : null}</h2>
             </div>
         </>
@@ -21,7 +19,8 @@ export default function Header(){
 
 
 
-
+                {/* {isAuthenticated ? <button onClick={() => setAuth(false)} className="btn btn-light btn-sm">Sign Out</button>
+                    : <button onClick={() => setAuth(true)} className="btn btn-light btn-sm">Sign In</button>} */}
 
 
 
