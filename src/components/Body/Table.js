@@ -9,7 +9,7 @@ const formTemplate = {
     id: ""
 }
 
-export default function Table({ project, tasks }){
+export default function Table({ project, tasks, removeTask }){
     const [taskState, settaskState] = useState(formTemplate)
 
     function handleEditTaskForm(event){
@@ -67,7 +67,7 @@ export default function Table({ project, tasks }){
                             <td>
                                 <button className="btn border-secondary btn-light btn-sm">Save</button>
                                 <button type="button" onClick={() => settaskState(formTemplate)} className="mx-2 btn border-secondary btn-light btn-sm">Cancel</button>
-                                <button type="button" className="btn btn-sm btn-danger">x</button>
+                                <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-danger">x</button>
                             </td>
                             </tr>
                         </>
