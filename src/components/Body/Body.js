@@ -84,7 +84,7 @@ export default function Body(){
             <div className="main-div text-center">
 
                 {projects.map(pro => 
-                    <Table key={pro.id} project={pro.projectName} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} />
+                    <Table key={pro.id} project={pro.projectName} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} />
                 )}
 
                 <form id="addTaskForm">

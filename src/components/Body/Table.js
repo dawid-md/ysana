@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState, Fragment, useEffect } from "react";
 
 const formTemplate = {
@@ -9,7 +10,7 @@ const formTemplate = {
     id: ""
 }
 
-export default function Table({ project, tasks, removeTask }){
+export default function Table({ project, tasks, removeTask, getData }){
     const [taskState, settaskState] = useState(formTemplate)
 
     function handleEditTaskForm(event){
@@ -24,6 +25,13 @@ export default function Table({ project, tasks, removeTask }){
     function clickEdit(event, task){
         event.preventDefault()
         settaskState(task)
+    }
+
+    async function updateTask(taskState){
+        const res = await axios.patch(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskState.id}.json`, taskState)
+        console.log(res);
+        settaskState(formTemplate)
+        getData()
     }
 
     return(
@@ -65,7 +73,7 @@ export default function Table({ project, tasks, removeTask }){
                                 <input type="text" required="required" value={taskState.project} name="project" onChange={handleEditTaskForm} />
                             </td>
                             <td>
-                                <button className="btn border-secondary btn-light btn-sm">Save</button>
+                                <button type="button" onClick={() => updateTask(taskState)} className="btn border-secondary btn-light btn-sm">Save</button>
                                 <button type="button" onClick={() => settaskState(formTemplate)} className="mx-2 btn border-secondary btn-light btn-sm">Cancel</button>
                                 <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-danger">x</button>
                             </td>
