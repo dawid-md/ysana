@@ -35,10 +35,9 @@ export default function MyTasks(){
     }
 
     useEffect(() => {
+        if(currentUser.displayName === '') currentUser.displayName = JSON.parse(window.localStorage.getItem('user-name'))
         getData()
     }, [])
-
-    //getData()
 
     return(
         loading ? 

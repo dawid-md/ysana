@@ -19,7 +19,6 @@ export function AuthProvider({ children }){
         }
         if (tokenData) {
             window.localStorage.setItem('token-data', JSON.stringify(tokenData))
-            //setCurrentUser(tokenData)
         }
         if (authenticateValue == false) {
             setisAuthenticated(false)
@@ -33,6 +32,7 @@ export function AuthProvider({ children }){
         if(userNameResponse[0] == 200){
             userData.displayName = userNameResponse[1]
             setCurrentUser({...userData})
+            window.localStorage.setItem('user-name', JSON.stringify(userData.displayName))
         }
         else if (userNameResponse[0] == 400){
             let dataByRefreshedToken = await getUserName(userNameResponse[1], null, true)    // , "" try by new token
@@ -40,6 +40,7 @@ export function AuthProvider({ children }){
             userData.displayName = dataByRefreshedToken[1]
             setAuth(true, userData)
             setCurrentUser({...userData})
+            window.localStorage.setItem('user-name', JSON.stringify(userData.displayName))
         }
         else{
             console.log('refresh token attempt failes');
