@@ -4,13 +4,14 @@ import Table from "../Body/Table"
 import AuthContext from "../../context/AuthContext"
 
 export default function MyTasks(){
-    const { currentUser } = useContext(AuthContext)
+    const { isAuthenticated, currentUser } = useContext(AuthContext)
 
     const [projects, setProjects] = useState([])
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true)
 
     async function getData(){
+        //console.log(currentUser);
         const resProjects = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json')
         const resTasks = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json')
 
@@ -37,6 +38,8 @@ export default function MyTasks(){
         getData()
     }, [])
 
+    //getData()
+
     return(
         loading ? 
             <div className="d-flex justify-content-center my-1">
@@ -48,10 +51,8 @@ export default function MyTasks(){
             <div className="text-center">
 
                 {projects.map(pro => 
-                    <Table key={pro.id} project={pro.projectName} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} />
+                    <Table key={pro.id} project={pro.projectName} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} />
                 )}
-                {/* <button onClick={insertTaskData} className="btn btn-primary my-2">Submit</button> */}
-                <p>{currentUser.displayName}</p>
             </div>
     )
 }

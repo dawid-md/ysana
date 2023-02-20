@@ -35,71 +35,73 @@ export default function Table({ project, tasks, removeTask, getData }){
     }
 
     return(
-        <>
-        <div>{project}</div>
-        <form>
-        <table className="table">
-            <thead>
-                <tr>
-                <th scope="col">Task</th>
-                <th scope="col">Assignee</th>
-                <th scope="col">Priority</th>
-                <th scope="col">Status</th>
-                <th scope="col">Project</th>
-                <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                { 
-                tasks.map(task => 
-                    <Fragment key={task.id}>
+        tasks.length > 0 ?
+            <>
+            <div>{project}</div>
+            <form>
+            <table className="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Task</th>
+                    <th scope="col">Assignee</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    { 
+                    tasks.map(task => 
+                        <Fragment key={task.id}>
 
-                        {taskState.id === task.id ? 
-                        <>
-                            <tr>
-                            <td>
-                                <input type="text" required="required" value={taskState.taskName} name="taskName" onChange={handleEditTaskForm} />
-                            </td>
-                            <td>
-                                <input type="text" required="required" value={taskState.assignee} name="assignee" onChange={handleEditTaskForm} />
-                            </td>
-                            <td>
-                                <input type="text" required="required" value={taskState.priority} name="priority" onChange={handleEditTaskForm} />
-                            </td>
-                            <td>
-                                <input type="text" required="required" value={taskState.status} name="status" onChange={handleEditTaskForm} />
-                            </td>
-                            <td>
-                                <input type="text" required="required" value={taskState.project} name="project" onChange={handleEditTaskForm} />
-                            </td>
-                            <td>
-                                <button type="button" onClick={() => updateTask(taskState)} className="btn border-secondary btn-light btn-sm">Save</button>
-                                <button type="button" onClick={() => settaskState(formTemplate)} className="mx-2 btn border-secondary btn-light btn-sm">Cancel</button>
-                                <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-danger">x</button>
-                            </td>
-                            </tr>
-                        </>
-                        :
-                        <>
-                            <tr>
-                                <td>{task.taskName}</td>
-                                <td>{task.assignee}</td>
-                                <td>{task.priority}</td>
-                                <td>{task.status}</td>
-                                <td>{task.project}</td>
-                                <td><button type="button" onClick={(event) => clickEdit(event, task)} className="btn btn-light border-secondary btn-sm">edit</button></td>
-                            </tr>
-                        </>
+                            {taskState.id === task.id ? 
+                            <>
+                                <tr>
+                                <td>
+                                    <input type="text" required="required" value={taskState.taskName} name="taskName" onChange={handleEditTaskForm} />
+                                </td>
+                                <td>
+                                    <input type="text" required="required" value={taskState.assignee} name="assignee" onChange={handleEditTaskForm} />
+                                </td>
+                                <td>
+                                    <input type="text" required="required" value={taskState.priority} name="priority" onChange={handleEditTaskForm} />
+                                </td>
+                                <td>
+                                    <input type="text" required="required" value={taskState.status} name="status" onChange={handleEditTaskForm} />
+                                </td>
+                                <td>
+                                    <input type="text" required="required" value={taskState.project} name="project" onChange={handleEditTaskForm} />
+                                </td>
+                                <td>
+                                    <button type="button" onClick={() => updateTask(taskState)} className="btn border-secondary btn-light btn-sm">Save</button>
+                                    <button type="button" onClick={() => settaskState(formTemplate)} className="mx-2 btn border-secondary btn-light btn-sm">Cancel</button>
+                                    <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-danger">x</button>
+                                </td>
+                                </tr>
+                            </>
+                            :
+                            <>
+                                <tr>
+                                    <td>{task.taskName}</td>
+                                    <td>{task.assignee}</td>
+                                    <td>{task.priority}</td>
+                                    <td>{task.status}</td>
+                                    <td>{task.project}</td>
+                                    <td><button type="button" onClick={(event) => clickEdit(event, task)} className="btn btn-light border-secondary btn-sm">edit</button></td>
+                                </tr>
+                            </>
 
-                        }
+                            }
 
-                    </Fragment>
-                )
-                }
-            </tbody>
-        </table>
-        </form>
-        </>
+                        </Fragment>
+                    )
+                    }
+                </tbody>
+            </table>
+            </form>
+            </>
+        :  null
     )
 }
 
