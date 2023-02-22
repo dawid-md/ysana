@@ -7,33 +7,49 @@ export default function Panel(){
 
     return(
         <div className="left-panel d-flex">
-            <nav className="nav flex-column mt-4">
+            <nav className="nav flex-column mt-5 panelLink">
             <Link to={"/"}>
-                <span className="nav-link">Home</span>
+            <div className="panelDiv">
+                    <span className="nav-link">Home</span>
+                </div>
             </Link>
             <Link to={"/mytasks"}>
-                <span className="nav-link">My Tasks</span>
+                <div className="panelDiv">
+                    <span className="nav-link">My Tasks</span>
+                </div>
             </Link>
             <Link to={"/"}>
-                <span className="nav-link">Inbox</span>
+                <div className="panelDiv">
+                    <span className="nav-link text-center">Inbox</span>
+                </div>
             </Link>
             <Link to={"/"}>
-                <span className="nav-link">Settings</span>
+            <div className="panelDiv">
+                    <span className="nav-link">Settings</span>
+                </div>
             </Link>
             <Link to={"/projects"}>
-                <span className="nav-link">Projects</span>
+            <div className="panelDiv">
+                    <span className="nav-link">Projects</span>
+                </div>
             </Link>
             {!isAuthenticated ? 
             <>
                 <Link to={"/login"}>
+                <div className="panelDiv">
                     <span className="nav-link">Login</span>
+                </div>
                 </Link>
                 <Link to={"/register"}>
+                <div className="panelDiv">
                     <span className="nav-link">Register</span>
+                </div>
                 </Link>
             </>
              : <Link to={"/login"}>
-                 <span className="nav-link" onClick={() => setAuth(false)}>Sign out</span>
+                <div className="panelDiv">
+                    <span className="nav-link" onClick={() => setAuth(false)}>Sign out</span>
+                </div>
                </Link>
             }
             </nav>

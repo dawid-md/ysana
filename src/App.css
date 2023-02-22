@@ -52,3 +52,20 @@ th, td {
 tr {
   line-height: 20px;
 }
+
+.panelLink{
+  width: 100%
+}
+
+.panelDiv{
+  width: 100%;
+}
+
+.panelDiv span{
+  text-align: center;
+}
+
+.panelDiv span:hover{
+  color: rgb(163, 149, 255);
+  background-color: #212939;
+}
