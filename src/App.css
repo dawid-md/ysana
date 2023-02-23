@@ -3,7 +3,7 @@
 }
 
 .main-div{
-  background-color: rgb(255, 243, 227);
+  /* background-color: rgb(255, 243, 227); */
 }
 
 .header{
@@ -41,8 +41,13 @@ table {
   width: 100%;
 }
 
+thead{
+  background-color: #6c7ae0;
+  color: white;
+}
+
 th, td {
-  border: 1px solid #000268;
+  border-bottom: 1px solid #d9d9d9;
   text-align: left;
   width: 12%;
   /* padding: 8px; */
@@ -53,19 +58,19 @@ tr {
   line-height: 20px;
 }
 
-.panelLink{
-  width: 100%
-}
-
 .panelDiv{
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5vh;
 }
 
 .panelDiv span{
   text-align: center;
 }
 
-.panelDiv span:hover{
+.panelDiv:hover{
   color: rgb(163, 149, 255);
   background-color: #212939;
 }
