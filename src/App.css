@@ -50,12 +50,11 @@ th, td {
   border-bottom: 1px solid #d9d9d9;
   text-align: left;
   width: 12%;
-  /* padding: 8px; */
-  /* font-size: 32px; */
+  vertical-align: middle;
 }
 
 tr {
-  line-height: 20px;
+  /* line-height: 20px; */
 }
 
 .panelDiv{
@@ -63,7 +62,7 @@ tr {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 5vh;
+  height: 50px;
 }
 
 .panelDiv span{
@@ -73,4 +72,8 @@ tr {
 .panelDiv:hover{
   color: rgb(163, 149, 255);
   background-color: #212939;
+}
+
+.projectNameRow{
+  border-bottom: 1px solid #d9d9d9;
 }

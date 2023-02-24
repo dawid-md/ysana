@@ -81,7 +81,20 @@ export default function Body(){
                 </div>
             </div>
         :
-            <div className="main-div text-center">
+            <div className="main-div">
+
+            <table className="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Task name</th>
+                    <th scope="col">Assignee</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Project</th>
+                    <th scope="col">Action</th>
+                    </tr>
+                </thead>
+            </table>
 
                 {projects.map(pro => 
                     <Table key={pro.id} project={pro.projectName} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} />

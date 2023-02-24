@@ -12,6 +12,7 @@ const formTemplate = {
 
 export default function Table({ project, tasks, removeTask, getData }){
     const [taskState, settaskState] = useState(formTemplate)
+    const [displayProject, setdisplayProject] = useState("d-block")
 
     function handleEditTaskForm(event){
         event.preventDefault()
@@ -34,21 +35,20 @@ export default function Table({ project, tasks, removeTask, getData }){
         getData()
     }
 
+    function changeProjectVisibility(){
+        displayProject === 'd-block' ? setdisplayProject('d-none') : setdisplayProject('d-block')
+    }
+
     return(
         tasks.length > 0 ?
             <>
-            <div>{project}</div>
-            <form>
+            <div className="projectNameRow">
+                <button className="btn btn-light btn-sm d-inline-block" onClick={changeProjectVisibility}>v</button>
+                <p className="fw-bold mx-1 d-inline-block">{project}</p>
+            </div>
+            <form id={project} className={displayProject}>
             <table className="table">
                 <thead>
-                    <tr>
-                    <th scope="col">Task</th>
-                    <th scope="col">Assignee</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Project</th>
-                    <th scope="col">Action</th>
-                    </tr>
                 </thead>
                 <tbody>
                     { 
