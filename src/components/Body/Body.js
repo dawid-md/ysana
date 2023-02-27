@@ -100,7 +100,7 @@ export default function Body(){
                     <Table key={pro.id} project={pro.projectName} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} />
                 )}
 
-                <form id="addTaskForm">
+                <form id="addTaskForm" className="mx-5">
                     <input 
                       type="text"
                       name="taskName"
@@ -149,7 +149,7 @@ export default function Body(){
                         <option key="1" value="1">Private</option>
                     </select>
                 </form>
-                <button onClick={insertTaskData} className="btn btn-primary my-2">Submit</button>
+                <button onClick={insertTaskData} className="btn btn-primary my-2 mx-5">Submit</button>
             </div>
     )
 }
