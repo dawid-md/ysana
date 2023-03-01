@@ -1,5 +1,6 @@
 import axios from "axios"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 import Table from "./Table";
 
 const formTemplate = {
@@ -15,8 +16,10 @@ export default function Body(){
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true)
     const [addFormData, setAddFormData] = useState(formTemplate)
+    const { currentUser } = useContext(AuthContext)
 
     async function getData(){
+        //console.log(currentUser.token)
         const resProjects = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json')
         const resTasks = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json')
 
@@ -60,13 +63,6 @@ export default function Body(){
         newFormData[fieldName] = fieldValue
 
         setAddFormData(newFormData)
-    }
-
-    function handleSelect(event){
-        event.preventDefault()
-
-        const field = event.target.value
-        console.log(field);
     }
 
     function test(){
@@ -129,14 +125,10 @@ export default function Body(){
                       placeholder="status"
                       onChange={handleAddFormChange}
                     />
-                    <input 
-                      type="text"
+                    <select 
+                      className=""
                       name="project"
-                      required="required"
-                      placeholder="project"
-                      onChange={handleAddFormChange}
-                    />
-                    <select onChange={handleSelect}>
+                      onChange={handleAddFormChange}>
                         <option 
                             key="s1" 
                             value=""></option>
