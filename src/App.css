@@ -46,8 +46,13 @@ thead{
   color: white;
 }
 
+tr>td:first-child, th:first-of-type{
+  width: 20%;
+}
+
 th, td {
   border-bottom: 1px solid #d9d9d9;
+  border-right: 1px solid #d9d9d9;
   text-align: left;
   width: 12%;
   vertical-align: middle;
@@ -79,11 +84,29 @@ tr {
 }
 
 #addTaskForm{
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
 }
 
-input, select{
+input, select, .testrow{
   width: 12rem;
   height: 2rem;
+}
+
+.testrow{
+  border: 1px solid greenyellow;
+}
+
+.holder{
+  border: 1px solid red;
+}
+
+img{
+  margin-left: 4px;
+  margin-right: 8px;
+  margin-bottom: 2px;
+}
+
+.table>:not(caption)>*>*{
+  padding: 4px;
 }

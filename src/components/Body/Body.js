@@ -19,6 +19,7 @@ export default function Body(){
     const { currentUser } = useContext(AuthContext)
 
     async function getData(){
+        console.log(currentUser);
         //console.log(currentUser.token)
         const resProjects = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json')
         const resTasks = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json')
@@ -96,7 +97,9 @@ export default function Body(){
                     <Table key={pro.id} project={pro.projectName} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} />
                 )}
 
-                <form id="addTaskForm" className="mx-5">
+                <div className="holder">
+
+                <form id="addTaskForm" className="d-inline-block">
                     <input 
                       type="text"
                       name="taskName"
@@ -141,7 +144,10 @@ export default function Body(){
                         <option key="1" value="1">Private</option>
                     </select>
                 </form>
-                <button onClick={insertTaskData} className="btn btn-primary my-2 mx-5">Submit</button>
+                <div className="testrow d-inline-block w-25"></div>
+                <button onClick={insertTaskData} className="btn btn-primary btn-sm">Submit</button>
+                {/* <button className="btn btn-secondary d-block mx-auto">xD</button> */}
+                </div>
             </div>
     )
 }

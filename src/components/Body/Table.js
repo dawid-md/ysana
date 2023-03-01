@@ -54,7 +54,6 @@ export default function Table({ project, tasks, removeTask, getData }){
                     { 
                     tasks.map(task => 
                         <Fragment key={task.id}>
-
                             {taskState.id === task.id ? 
                             <>
                                 <tr>
@@ -83,7 +82,7 @@ export default function Table({ project, tasks, removeTask, getData }){
                             :
                             <>
                                 <tr>
-                                    <td>{task.taskName}</td>
+                                    <td><img src="checkmark.png" width="20" height="20"></img>{task.taskName}</td>
                                     <td>{task.assignee}</td>
                                     <td>{task.priority}</td>
                                     <td>{task.status}</td>
