@@ -13,6 +13,11 @@ export function AuthProvider({ children }){
         displayName: ''
     })
 
+    const getCurrentUserToken = () => {
+        console.log('returning user token');
+        return currentUser.token
+    }
+
     const setAuth = (authenticateValue = false, tokenData = null) => {
         if (authenticateValue) {
             setisAuthenticated(true)
@@ -78,7 +83,7 @@ export function AuthProvider({ children }){
     }
 
     return(
-        <AuthContext.Provider value={{ isAuthenticated, setAuth, currentUser, setUser }}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{ setAuth, currentUser, setUser, getCurrentUserToken }}>{children}</AuthContext.Provider>
     )
 }
 

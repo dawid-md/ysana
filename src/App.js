@@ -4,21 +4,22 @@ import Register from './components/Register/Register'
 import Login from './components/Login/Login'
 import Panel from './components/Panel/Panel'
 import './App.css'
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AuthContext from './context/AuthContext'
 import MyTasks from './components/MyTasks/MyTasks'
 import Projects from './components/Projects/Projects'
 
 function App() {
-  const { isAuthenticated, setAuth, setUser } = useContext(AuthContext)
+  const { setAuth, setUser } = useContext(AuthContext)
+  const [isAuth, setisAuth] = useState(false)
 
-  const checkUser = () => {
+  const checkUser = async () => {
     const tokenData = window.localStorage.getItem('token-data')
     if(tokenData){
-      //console.log(JSON.parse(tokenData));
-      setAuth(true)
-      setUser(tokenData)
+      await setAuth(true)
+      await setUser(tokenData)
+      setisAuth(true)
     }
   }
 
@@ -27,6 +28,8 @@ function App() {
   }, [])
 
   return (
+    //isAuth?
+
     <div className="App d-flex">
         <BrowserRouter>
             <Panel />
@@ -42,6 +45,8 @@ function App() {
             </div>
         </BrowserRouter>
     </div>
+
+    //: null
   );
 }
 

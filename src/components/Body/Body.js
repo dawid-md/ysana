@@ -18,17 +18,9 @@ export default function Body(){
     const [addFormData, setAddFormData] = useState(formTemplate)
     const { currentUser } = useContext(AuthContext)
 
-    let datas = {
-        idToken: currentUser.token,
-        email: currentUser.email,
-        uid: currentUser.userID
-    }
-
     async function getData(){
-        console.log(currentUser);
-        //console.log(currentUser.token)
-        const resProjects = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json', datas)
-        const resTasks = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json')
+        const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`)
+        const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`)
 
         const projectsData = []
         for(const key in resProjects.data){

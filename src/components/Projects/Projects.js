@@ -1,7 +1,9 @@
 import axios from "axios"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
+import AuthContext from "../../context/AuthContext"
 
 export default function Projects(){
+    const { currentUser } = useContext(AuthContext)
     const [loading, setLoading] = useState(true)
     const [projects, setProjects] = useState([])
 
@@ -10,7 +12,7 @@ export default function Projects(){
     }
 
     async function getProjectsData(){
-        const res = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json')
+        const res = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`)
         const projectsData = []
         for(const key in res.data){
             projectsData.push({...res.data[key], id: key})
@@ -26,12 +28,12 @@ export default function Projects(){
     }
 
     async function insertProjectData(){
-        const res = await axios.post('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json', newProject)
+        const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`, newProject)
         getProjectsData()
     }
 
     async function removeProject(projectID){
-        const res = await axios.delete(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects/${projectID}.json`)
+        const res = await axios.delete(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects/${projectID}.json?auth=${currentUser.token}`)
         getProjectsData()
     }
     

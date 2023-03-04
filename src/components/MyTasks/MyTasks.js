@@ -4,16 +4,15 @@ import Table from "../Body/Table"
 import AuthContext from "../../context/AuthContext"
 
 export default function MyTasks(){
-    const { isAuthenticated, currentUser } = useContext(AuthContext)
-
+    const { currentUser } = useContext(AuthContext)
     const [projects, setProjects] = useState([])
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true)
 
     async function getData(){
         //console.log(currentUser);
-        const resProjects = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json')
-        const resTasks = await axios.get('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json')
+        const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`)
+        const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`)
 
         const projectsData = []
         for(const key in resProjects.data){
@@ -30,7 +29,7 @@ export default function MyTasks(){
     }
 
     async function removeTask(taskID){
-        const res = await axios.delete(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskID}.json`)
+        const res = await axios.delete(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskID}.json?auth=${currentUser.token}`)
         getData()
     }
 

@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useState, Fragment, useEffect } from "react";
+import { useState, Fragment, useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 
 const formTemplate = {
     taskName: "",
@@ -11,6 +12,7 @@ const formTemplate = {
 }
 
 export default function Table({ project, tasks, removeTask, getData }){
+    const { currentUser } = useContext(AuthContext)
     const [taskState, settaskState] = useState(formTemplate)
     const [displayProject, setdisplayProject] = useState("d-block")
 
@@ -29,7 +31,7 @@ export default function Table({ project, tasks, removeTask, getData }){
     }
 
     async function updateTask(taskState){
-        const res = await axios.patch(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskState.id}.json`, taskState)
+        const res = await axios.patch(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskState.id}.json?auth=${currentUser.token}`, taskState)
         console.log(res);
         settaskState(formTemplate)
         getData()
