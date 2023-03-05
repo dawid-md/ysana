@@ -16,7 +16,7 @@ export default function Body(){
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true)
     const [addFormData, setAddFormData] = useState(formTemplate)
-    const { currentUser } = useContext(AuthContext)
+    const { isAuthenticated, currentUser } = useContext(AuthContext)
 
     async function getData(){
         const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`)
@@ -49,8 +49,10 @@ export default function Body(){
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        if(isAuthenticated){
+            getData()
+        }
+    }, [isAuthenticated])
 
     function handleAddFormChange(event){
         event.preventDefault()
@@ -62,10 +64,6 @@ export default function Body(){
         newFormData[fieldName] = fieldValue
 
         setAddFormData(newFormData)
-    }
-
-    function test(){
-        console.log("test passed");
     }
 
     return(
