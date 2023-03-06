@@ -18,7 +18,7 @@ function App() {
     const tokenData = window.localStorage.getItem('token-data')
     if(tokenData){
       await setAuth(true)
-      await setUser(tokenData)
+      await setUser(JSON.parse(tokenData))
       setisAuth(true)
     }
   }

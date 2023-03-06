@@ -25,14 +25,15 @@ export function AuthProvider({ children }){
         if (tokenData) {
             window.localStorage.setItem('token-data', JSON.stringify(tokenData))
         }
-        if (authenticateValue == false) {
+        if (authenticateValue === false) {
             setisAuthenticated(false)
             window.localStorage.removeItem('token-data')
         }
     }
 
     const setUser = async (tokenData = null) => {
-        let userData = JSON.parse(tokenData)
+        //let userData = JSON.parse(tokenData)
+        let userData = tokenData
         let userNameResponse = await getUserName(userData.token, userData.refreshToken, false)  //, ""
         if(userNameResponse[0] == 200){
             userData.displayName = userNameResponse[1]
@@ -51,6 +52,7 @@ export function AuthProvider({ children }){
             console.log('refresh token attempt failes');
             setisAuthenticated(false)
         }
+        return true
     }
 
     const getUserName = async (token, refreshTokenID, lastCheck = false) => {   //, addtest = ""

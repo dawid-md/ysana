@@ -49,10 +49,10 @@ export default function Body(){
     }
 
     useEffect(() => {
-        if(isAuthenticated){
+        if(isAuthenticated && currentUser.token) {
             getData()
         }
-    }, [isAuthenticated])
+    }, [isAuthenticated, currentUser.token])
 
     function handleAddFormChange(event){
         event.preventDefault()

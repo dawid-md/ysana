@@ -4,7 +4,7 @@ import Table from "../Body/Table"
 import AuthContext from "../../context/AuthContext"
 
 export default function MyTasks(){
-    const { currentUser } = useContext(AuthContext)
+    const { isAuthenticated, currentUser } = useContext(AuthContext)
     const [projects, setProjects] = useState([])
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true)
@@ -34,9 +34,11 @@ export default function MyTasks(){
     }
 
     useEffect(() => {
-        if(currentUser.displayName === '') currentUser.displayName = JSON.parse(window.localStorage.getItem('user-name'))
-        getData()
-    }, [])
+        if(currentUser.displayName === ''){currentUser.displayName = JSON.parse(window.localStorage.getItem('user-name'))}
+        if(isAuthenticated && currentUser.token) {
+            getData()
+        }
+    }, [isAuthenticated, currentUser.token])
 
     return(
         loading ? 

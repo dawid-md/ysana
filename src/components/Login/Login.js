@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 export default function Login(){
     const navigate = useNavigate()
-    const { isAuthenticated, setAuth } = useContext(AuthContext)
+    const { isAuthenticated, setAuth, setUser } = useContext(AuthContext)
     const [userCredentials, setuserCredentials] = useState({
         email: {
             value: "",
@@ -44,11 +44,16 @@ export default function Login(){
                 token: res.data.idToken,
                 refreshToken: res.data.refreshToken,
                 userID: res.data.localId,
-                //displayName: res.data.displayName
+            })
+            setUser({
+                email: res.data.email,
+                token: res.data.idToken,
+                refreshToken: res.data.refreshToken,
+                userID: res.data.localId,
             })
             navigate('/')
         } catch (ex) {
-            console.log(ex.response);
+            console.log('sign in error ' + ex.response);
         }
     }
 
