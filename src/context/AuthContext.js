@@ -4,7 +4,7 @@ import axios from "axios";
 const AuthContext = createContext({})
 
 export function AuthProvider({ children }){
-    const [isAuthenticated, setisAuthenticated] = useState(false)
+    const [isAuthenticated, setisAuthenticated] = useState(null)
     const [currentUser, setCurrentUser] = useState({
         email: '',
         token: '',

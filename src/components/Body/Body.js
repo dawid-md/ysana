@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Table from "./Table";
 
@@ -17,6 +18,7 @@ export default function Body(){
     const [loading, setLoading] = useState(true)
     const [addFormData, setAddFormData] = useState(formTemplate)
     const { isAuthenticated, currentUser } = useContext(AuthContext)
+    const navigate = useNavigate();
 
     async function getData(){
         const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`)
@@ -37,7 +39,7 @@ export default function Body(){
     }
 
     async function insertTaskData(){
-        const res = await axios.post('https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', addFormData)
+        const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, addFormData)
         getData()
         document.getElementById("addTaskForm").reset()
         setAddFormData(formTemplate)
@@ -49,10 +51,14 @@ export default function Body(){
     }
 
     useEffect(() => {
+        console.log(isAuthenticated)
         if(isAuthenticated && currentUser.token) {
             getData()
         }
-    }, [isAuthenticated, currentUser.token])
+        else if(isAuthenticated === false){
+            navigate("/login")
+        }
+    }, [isAuthenticated, currentUser])
 
     function handleAddFormChange(event){
         event.preventDefault()
@@ -112,25 +118,39 @@ export default function Body(){
                     />
                     <input 
                       type="text"
-                      name="priority"
+                      name="duedate"
                       required="required"
-                      placeholder="priority"
-                      onChange={handleAddFormChange}
-                    />
-                    <input 
-                      type="text"
-                      name="status"
-                      required="required"
-                      placeholder="status"
+                      placeholder="Due Date"
                       onChange={handleAddFormChange}
                     />
                     <select 
                       className=""
-                      name="project"
+                      name="priority"
+                      defaultValue={0}
                       onChange={handleAddFormChange}>
-                        <option 
-                            key="s1" 
-                            value=""></option>
+                        <option value="0" disabled hidden>Priority</option>
+                        <option value="1">Low</option>
+                        <option value="2">Medium</option>
+                        <option value="3">High</option>
+                        <option value="4">Urgent</option>
+                    </select>
+                    <select 
+                      className=""
+                      name="status"
+                      defaultValue={0}
+                      onChange={handleAddFormChange}>
+                        <option value="0" disabled hidden>Status</option>
+                        <option value="1">Not Started</option>
+                        <option value="2">In Progress</option>
+                        <option value="3">On Hold</option>
+                        <option value="4">Done</option>
+                    </select>
+                    <select 
+                      className=""
+                      name="project"
+                      defaultValue={0}
+                      onChange={handleAddFormChange}>
+                        <option value="0" disabled hidden>Project</option>
                         {projects.map(pro => 
                             <option 
                                 key={pro.id} 
