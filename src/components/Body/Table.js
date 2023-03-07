@@ -60,19 +60,39 @@ export default function Table({ project, tasks, removeTask, getData }){
                             <>
                                 <tr>
                                 <td>
-                                    <input type="text" required="required" value={taskState.taskName} name="taskName" onChange={handleEditTaskForm} />
+                                    <input type="text" value={taskState.taskName} name="taskName" onChange={handleEditTaskForm} />
                                 </td>
                                 <td>
-                                    <input type="text" required="required" value={taskState.assignee} name="assignee" onChange={handleEditTaskForm} />
+                                    <input type="text" value={taskState.assignee} name="assignee" onChange={handleEditTaskForm} />
                                 </td>
                                 <td>
-                                    <input type="text" required="required" value={taskState.priority} name="priority" onChange={handleEditTaskForm} />
+                                    <select 
+                                        className=""
+                                        name="priority"
+                                        defaultValue={taskState.priority}
+                                        onChange={handleEditTaskForm}>
+                                            <option value={taskState.priority} disabled hidden>{taskState.priority}</option>
+                                            <option value="Low">Low</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="High">High</option>
+                                            <option value="Urgent">Urgent</option>
+                                    </select>
                                 </td>
                                 <td>
-                                    <input type="text" required="required" value={taskState.status} name="status" onChange={handleEditTaskForm} />
+                                    <select 
+                                        className=""
+                                        name="status"
+                                        defaultValue={taskState.status}
+                                        onChange={handleEditTaskForm}>
+                                            <option value={taskState.status} disabled hidden>{taskState.status}</option>
+                                            <option value="Not Started">Not Started</option>
+                                            <option value="In Progress">In Progress</option>
+                                            <option value="On Hold">On Hold</option>
+                                            <option value="Done">Done</option>
+                                    </select>
                                 </td>
                                 <td>
-                                    <input type="text" required="required" value={taskState.project} name="project" onChange={handleEditTaskForm} />
+                                    <input type="text" value={taskState.project} name="project" onChange={handleEditTaskForm} />
                                 </td>
                                 <td>
                                     <button type="button" onClick={() => updateTask(taskState)} className="btn border-secondary btn-light btn-sm">Save</button>
