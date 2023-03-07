@@ -55,6 +55,7 @@ export default function MyTasks(){
                     <tr>
                     <th scope="col">Task name</th>
                     <th scope="col">Assignee</th>
+                    <th scope="col">Due Date</th>
                     <th scope="col">Priority</th>
                     <th scope="col">Status</th>
                     <th scope="col">Project</th>
@@ -64,7 +65,7 @@ export default function MyTasks(){
             </table>
 
                 {projects.map(pro => 
-                    <Table key={pro.id} project={pro.projectName} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} />
+                    <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} />
                 )}
             </div>
     )

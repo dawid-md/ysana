@@ -7,6 +7,7 @@ import Table from "./Table";
 const formTemplate = {
     taskName: "",
     assignee: "",
+    duedate: "",
     priority: "",
     status: "",
     project: ""
@@ -46,7 +47,7 @@ export default function Body(){
     }
 
     async function removeTask(taskID){
-        const res = await axios.delete(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskID}.json`)
+        const res = await axios.delete(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskID}.json?auth=${currentUser.token}`)
         getData()
     }
 
@@ -87,6 +88,7 @@ export default function Body(){
                     <tr>
                     <th scope="col">Task name</th>
                     <th scope="col">Assignee</th>
+                    <th scope="col">Due Date</th>
                     <th scope="col">Priority</th>
                     <th scope="col">Status</th>
                     <th scope="col">Project</th>
@@ -96,7 +98,7 @@ export default function Body(){
             </table>
 
                 {projects.map(pro => 
-                    <Table key={pro.id} project={pro.projectName} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} />
+                    <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} />
                 )}
 
                 <div className="holder">
@@ -126,24 +128,24 @@ export default function Body(){
                     <select 
                       className=""
                       name="priority"
-                      defaultValue={0}
+                      defaultValue={"Priority"}
                       onChange={handleAddFormChange}>
-                        <option value="0" disabled hidden>Priority</option>
-                        <option value="1">Low</option>
-                        <option value="2">Medium</option>
-                        <option value="3">High</option>
-                        <option value="4">Urgent</option>
+                        <option value="Priority" disabled hidden>Priority</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                        <option value="Urgent">Urgent</option>
                     </select>
                     <select 
                       className=""
                       name="status"
-                      defaultValue={0}
+                      defaultValue="Status"
                       onChange={handleAddFormChange}>
-                        <option value="0" disabled hidden>Status</option>
-                        <option value="1">Not Started</option>
-                        <option value="2">In Progress</option>
-                        <option value="3">On Hold</option>
-                        <option value="4">Done</option>
+                        <option value="Status" disabled hidden>Status</option>
+                        <option value="Not Started">Not Started</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="On Hold">On Hold</option>
+                        <option value="Done">Done</option>
                     </select>
                     <select 
                       className=""

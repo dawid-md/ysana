@@ -5,13 +5,14 @@ import AuthContext from "../../context/AuthContext";
 const formTemplate = {
     taskName: "",
     assignee: "",
+    duedate: "",
     priority: "",
     status: "",
     project: "",
     id: ""
 }
 
-export default function Table({ project, tasks, removeTask, getData }){
+export default function Table({ project, projects, tasks, removeTask, getData }){
     const { currentUser } = useContext(AuthContext)
     const [taskState, settaskState] = useState(formTemplate)
     const [displayProject, setdisplayProject] = useState("d-block")
@@ -66,6 +67,9 @@ export default function Table({ project, tasks, removeTask, getData }){
                                     <input type="text" value={taskState.assignee} name="assignee" onChange={handleEditTaskForm} />
                                 </td>
                                 <td>
+                                    <input type="text" value={taskState.duedate} name="duedate" onChange={handleEditTaskForm} />
+                                </td>
+                                <td>
                                     <select 
                                         className=""
                                         name="priority"
@@ -92,7 +96,20 @@ export default function Table({ project, tasks, removeTask, getData }){
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" value={taskState.project} name="project" onChange={handleEditTaskForm} />
+                                    <select 
+                                        className=""
+                                        name="project"
+                                        defaultValue={taskState.project}
+                                        onChange={handleEditTaskForm}>
+                                            <option value={taskState.project} disabled hidden>{taskState.project}</option>
+                                            {projects.map(pro => 
+                                                <option 
+                                                    key={pro.id} 
+                                                    value={pro.projectName}>
+                                                        {pro.projectName}</option>
+                                            )}
+                                            <option key="1" value="1">Private</option>
+                                    </select>
                                 </td>
                                 <td>
                                     <button type="button" onClick={() => updateTask(taskState)} className="btn border-secondary btn-light btn-sm">Save</button>
@@ -106,6 +123,7 @@ export default function Table({ project, tasks, removeTask, getData }){
                                 <tr>
                                     <td><img src="checkmark.png" width="20" height="20"></img>{task.taskName}</td>
                                     <td>{task.assignee}</td>
+                                    <td>{task.duedate}</td>
                                     <td>{task.priority}</td>
                                     <td>{task.status}</td>
                                     <td>{task.project}</td>
