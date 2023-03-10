@@ -110,3 +110,9 @@ img{
 .table>:not(caption)>*>*{
   padding: 4px;
 }
+
+.centeredItem{
+  width: 25%;
+  border: 1px solid rebeccapurple;
+  margin: 10px auto auto auto;
+}

@@ -49,16 +49,13 @@ export default function Projects(){
                 </div>
             </div>
         :    
-        <div> 
+        <div className="centeredItem"> 
             {projects.map(project => 
                 <div key={project.id}>
-                    <div className="d-inline-block mx-2 my-2">{project.projectName}<button className="btn btn-danger btn-sm mx-2" onClick={() => removeProject(project.id)}>X</button></div>
+                    <div className="mx-2 my-2">{project.projectName}<button className="btn btn-danger btn-sm mx-2" onClick={() => removeProject(project.id)}>X</button></div>
                 </div>)}
-
-
             <input type="text" onChange={handleInputChange} className="form-control w-25 mx-2 my-2"/>
             <button className="btn btn-primary mx-2 my-2" onClick={insertProjectData}>Add Project</button>
-            
         </div> 
 
     )       
