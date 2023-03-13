@@ -27,7 +27,7 @@ export default function Table({ project, projects, tasks, removeTask, getData })
     }
 
     function clickEdit(event, task){
-        event.preventDefault()
+        //event.preventDefault()
         settaskState(task)
     }
 

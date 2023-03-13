@@ -113,6 +113,27 @@ img{
 
 .centeredItem{
   width: 25%;
-  border: 1px solid rebeccapurple;
-  margin: 10px auto auto auto;
+  border: 1px solid rgb(223, 223, 223);
+  border-radius: 10px;
+  margin: 20px auto auto auto;
+  padding-bottom: 5px;
+}
+
+.projectHolder{
+  border: 1px solid rgb(223, 223, 223);
+  border-radius: 5px;
+  padding-left: 5px;
+  height: 40px;
+}
+
+.addProjectInput{
+  width: 94%;
+  height: 40px;
+}
+
+.buttonAddProject{
+  display: block;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 94% !important;
 }

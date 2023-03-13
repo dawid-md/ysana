@@ -52,10 +52,10 @@ export default function Projects(){
         <div className="centeredItem"> 
             {projects.map(project => 
                 <div key={project.id}>
-                    <div className="mx-2 my-2">{project.projectName}<button className="btn btn-danger btn-sm mx-2" onClick={() => removeProject(project.id)}>X</button></div>
+                    <div className="mx-3 my-3 projectHolder">{project.projectName}<button className="btn btn-danger btn-sm mx-2" onClick={() => removeProject(project.id)}>X</button></div>
                 </div>)}
-            <input type="text" onChange={handleInputChange} className="form-control w-25 mx-2 my-2"/>
-            <button className="btn btn-primary mx-2 my-2" onClick={insertProjectData}>Add Project</button>
+            <input type="text" onChange={handleInputChange} className="form-control addProjectInput mx-auto my-3"/>
+            <button className="btn btn-primary my-3 w-75 buttonAddProject" onClick={insertProjectData}>Add Project</button>
         </div> 
 
     )       
