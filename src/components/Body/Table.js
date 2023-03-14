@@ -124,8 +124,8 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                                     <td><img src="checkmark.png" width="20" height="20"></img>{task.taskName}</td>
                                     <td>{task.assignee}</td>
                                     <td>{task.duedate}</td>
-                                    <td>{task.priority}</td>
-                                    <td>{task.status}</td>
+                                    <td><span className="priorityBackground">{task.priority}</span></td>
+                                    <td><span className="statusBackground">{task.status}</span></td>
                                     <td>{task.project}</td>
                                     <td><button type="button" onClick={(event) => clickEdit(event, task)} className="btn btn-light border-secondary btn-sm">edit</button></td>
                                 </tr>

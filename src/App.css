@@ -68,6 +68,7 @@ tr {
   justify-content: center;
   align-items: center;
   height: 50px;
+  font-family: sans-serif;
 }
 
 .panelDiv span{
@@ -136,4 +137,17 @@ img{
   margin-left: auto !important;
   margin-right: auto !important;
   width: 94% !important;
+}
+
+.statusBackground{
+  background-color: rgb(207, 223, 172);
+  border-radius: 3px;
+  padding: 4px;
+  width: 200px;
+}
+
+.priorityBackground{
+  background-color: rgb(223, 172, 172);
+  border-radius: 3px;
+  padding: 4px;
 }
