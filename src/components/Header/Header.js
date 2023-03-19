@@ -8,8 +8,8 @@ export default function Header(){
     return(
         <>
             <div className="header d-flex">
-                <h2>Tasks</h2>
-                <h2>{isAuthenticated ? currentUser.displayName : null}</h2>
+                {/* <h2>Tasks</h2> */}
+                <h3 className="userNameLabel">{isAuthenticated ? currentUser.displayName : null}</h3>
             </div>
         </>
     )
