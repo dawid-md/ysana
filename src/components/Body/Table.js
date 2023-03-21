@@ -71,7 +71,7 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                                 </td>
                                 <td>
                                     <select 
-                                        className=""
+                                        className="tableCellCentered"
                                         name="priority"
                                         defaultValue={taskState.priority}
                                         onChange={handleEditTaskForm}>
@@ -108,7 +108,7 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                                                     value={pro.projectName}>
                                                         {pro.projectName}</option>
                                             )}
-                                            <option key="1" value="1">Private</option>
+                                            {/* <option key="1" value="1">Private</option> */}
                                     </select>
                                 </td>
                                 <td>
@@ -124,8 +124,8 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                                     <td><img src="checkmark.png" width="20" height="20"></img>{task.taskName}</td>
                                     <td>{task.assignee}</td>
                                     <td>{task.duedate}</td>
-                                    <td><span className="priorityBackground">{task.priority}</span></td>
-                                    <td><span className="statusBackground">{task.status}</span></td>
+                                    <td><span className={task.priority}>{task.priority}</span></td>
+                                    <td><span className={(task.status).replace(/ /g, '_')}>{task.status}</span></td>
                                     <td>{task.project}</td>
                                     <td><button type="button" onClick={(event) => clickEdit(event, task)} className="btn btn-light border-secondary btn-sm">edit</button></td>
                                 </tr>

@@ -3,6 +3,8 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Table from "./Table";
+import ReactDatePicker from "react-datepicker";         //datepicker
+import "react-datepicker/dist/react-datepicker.css";    //datepicker
 
 const formTemplate = {
     taskName: "",
@@ -19,6 +21,7 @@ export default function Body(){
     const [loading, setLoading] = useState(true)
     const [addFormData, setAddFormData] = useState(formTemplate)
     const { isAuthenticated, currentUser } = useContext(AuthContext)
+    const [startDate, setStartDate] = useState(new Date()); //datepicker
     const navigate = useNavigate();
 
     async function getData(){
@@ -119,7 +122,7 @@ export default function Body(){
                       onChange={handleAddFormChange}
                     />
                     <input 
-                      type="text"
+                      type="date"
                       name="duedate"
                       required="required"
                       placeholder="Due Date"

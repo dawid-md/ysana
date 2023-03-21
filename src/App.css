@@ -55,7 +55,7 @@ tr>td:first-child, th:first-of-type{
 th, td {
   border-bottom: 1px solid #d9d9d9;
   border-right: 1px solid #d9d9d9;
-  text-align: left;
+  /* text-align: left; */
   width: 12%;
   vertical-align: middle;
 }
@@ -141,15 +141,28 @@ img{
   width: 94% !important;
 }
 
-.statusBackground{
-  background-color: rgb(207, 223, 172);
-  border-radius: 3px;
-  padding: 4px;
-  width: 200px;
+.Low, .Medium, .High, .Urgent, .Not_Started, .In_Progress, .On_Hold, .Done{
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 3px 6px 3px 6px
+}
+.Low, .Done{
+  background-color: #a4cf30;
+}
+.Medium, .In_Progress{
+  background-color: #1eaaea;
+}
+.High, .On_Hold{
+  background-color: #ffca18;
+}
+.Urgent{
+  background-color: #e8384f;
+}
+.Not_Started{
+  background-color: #7a6ff0;
 }
 
-.priorityBackground{
-  background-color: rgb(223, 172, 172);
-  border-radius: 3px;
-  padding: 4px;
+.tableCellCentered{
+  text-align: center !important;
 }
