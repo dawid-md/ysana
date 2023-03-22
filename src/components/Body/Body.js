@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Table from "./Table";
@@ -23,6 +23,7 @@ export default function Body(){
     const { isAuthenticated, currentUser } = useContext(AuthContext)
     const [startDate, setStartDate] = useState(new Date()); //datepicker
     const navigate = useNavigate();
+    const formRef = useRef(null)
 
     async function getData(){
         const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`)
@@ -42,11 +43,15 @@ export default function Body(){
         setLoading(false)
     }
 
-    async function insertTaskData(){
+    async function insertTaskData(event){
+        event.preventDefault();
         const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, addFormData)
         getData()
-        document.getElementById("addTaskForm").reset()
         setAddFormData(formTemplate)
+        formRef.current.taskName.value = "";
+        formRef.current.assignee.value = "";
+        formRef.current.duedate.value = "";
+        formRef.current.reset()
     }
 
     async function removeTask(taskID){
@@ -106,7 +111,7 @@ export default function Body(){
 
                 <div className="holder">
 
-                <form id="addTaskForm" className="d-inline-block">
+                <form id="addTaskForm" ref={formRef} onSubmit={insertTaskData} className="d-inline-block">
                     <input 
                       type="text"
                       name="taskName"
@@ -162,8 +167,9 @@ export default function Body(){
                                 value={pro.projectName}>
                                     {pro.projectName}</option>
                         )}
-                        <option key="1" value="1">Private</option>
+                        {/* <option key="1" value="1">Private</option> */}
                     </select>
+                    <input type="submit" value="Submit"></input>
                 </form>
                 <div className="testrow d-inline-block w-25"></div>
                 <button onClick={insertTaskData} className="btn btn-primary btn-sm">Submit</button>
