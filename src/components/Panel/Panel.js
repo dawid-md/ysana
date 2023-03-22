@@ -10,32 +10,32 @@ export default function Panel(){
             <div className="mt-5">
             <Link to={"/"}>
                 <div className="panelDiv">
-                    <span>Home</span>
+                    <span><i className="fa-solid fa-house"></i> Home</span>
                 </div>
             </Link>
             <Link to={"/"}>
                 <div className="panelDiv">
-                    <span>Inbox</span>
+                    <span><i className="fa-solid fa-envelope"></i> Inbox</span>
                 </div>
             </Link>
             <Link to={"/mytasks"}>
                 <div className="panelDiv">
-                    <span>My Tasks</span>
+                    <span><i className="fa-solid fa-list-check"></i> My Tasks</span>
                 </div>
             </Link>
             <Link to={"/"}>
                 <div className="panelDiv">
-                    <span>Calendar</span>
+                    <span><i className="fa-solid fa-calendar-days"></i> Calendar</span>
                 </div>
             </Link>
             <Link to={"/"}>
-            <div className="panelDiv">
-                    <span>Settings</span>
+                <div className="panelDiv">
+                    <span><i className="fa-solid fa-gears"></i> Settings</span>
                 </div>
             </Link>
             <Link to={"/projects"}>
-            <div className="panelDiv">
-                    <span>Projects</span>
+                <div className="panelDiv">
+                    <span><i className="fa-solid fa-diagram-project"></i> Projects</span>
                 </div>
             </Link>
             {!isAuthenticated ? 
@@ -53,7 +53,7 @@ export default function Panel(){
             </>
              : <Link to={"/login"}>
                 <div className="panelDiv">
-                    <span onClick={() => setAuth(false)}>Sign out</span>
+                    <span onClick={() => setAuth(false)}><i className="fa-solid fa-arrow-right-from-bracket"></i> Sign out</span>
                 </div>
                </Link>
             }

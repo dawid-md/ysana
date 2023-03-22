@@ -76,7 +76,7 @@ tr {
 .panelDiv{
   width: 100%;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   height: 50px;
   font-family: sans-serif;
@@ -172,4 +172,12 @@ img{
 }
 .Not_Started{
   background-color: #7a6ff0;
+}
+
+span{
+  margin-left: 35%;
+}
+
+.fa-solid{
+  padding-right: 8px;
 }

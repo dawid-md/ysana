@@ -93,9 +93,8 @@ export default function Body(){
 
             <div className="filterPanel">
                 <button className="addTaskbtn btn btn-light btn-sm">+ Add Task</button>
-                <button className="addTaskbtnX btn btn-primary btn-sm">+ Add Task</button>
-                <button className="addTaskbtnX btn btn-secondary btn-sm">+ Add Task</button>
-                <button className="addTaskbtnX btn btn-warning btn-sm">+ Add Task</button>
+                <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button>
+                <button className="addTaskbtnX btn btn-light btn-sm">Sort</button>
             </div>
 
             <table className="table">
