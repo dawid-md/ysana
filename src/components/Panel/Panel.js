@@ -13,6 +13,11 @@ export default function Panel(){
                     <span>Home</span>
                 </div>
             </Link>
+            <Link to={"/"}>
+                <div className="panelDiv">
+                    <span>Inbox</span>
+                </div>
+            </Link>
             <Link to={"/mytasks"}>
                 <div className="panelDiv">
                     <span>My Tasks</span>
@@ -20,7 +25,7 @@ export default function Panel(){
             </Link>
             <Link to={"/"}>
                 <div className="panelDiv">
-                    <span>Inbox</span>
+                    <span>Calendar</span>
                 </div>
             </Link>
             <Link to={"/"}>

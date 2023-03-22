@@ -61,17 +61,17 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                             <>
                                 <tr>
                                 <td>
-                                    <input type="text" value={taskState.taskName} name="taskName" onChange={handleEditTaskForm} />
+                                    <input className="editableCell" type="text" value={taskState.taskName} name="taskName" onChange={handleEditTaskForm} />
                                 </td>
                                 <td>
-                                    <input type="text" value={taskState.assignee} name="assignee" onChange={handleEditTaskForm} />
+                                    <input className="editableCell" type="text" value={taskState.assignee} name="assignee" onChange={handleEditTaskForm} />
                                 </td>
                                 <td>
-                                    <input type="text" value={taskState.duedate} name="duedate" onChange={handleEditTaskForm} />
+                                    <input className="editableCell" type="date" value={taskState.duedate} name="duedate" onChange={handleEditTaskForm} />
                                 </td>
                                 <td>
                                     <select 
-                                        className="tableCellCentered"
+                                        className="editableCell"
                                         name="priority"
                                         defaultValue={taskState.priority}
                                         onChange={handleEditTaskForm}>
@@ -84,7 +84,7 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                                 </td>
                                 <td>
                                     <select 
-                                        className=""
+                                        className="editableCell"
                                         name="status"
                                         defaultValue={taskState.status}
                                         onChange={handleEditTaskForm}>
@@ -97,7 +97,7 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                                 </td>
                                 <td>
                                     <select 
-                                        className=""
+                                        className="editableCell"
                                         name="project"
                                         defaultValue={taskState.project}
                                         onChange={handleEditTaskForm}>
@@ -112,8 +112,8 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                                     </select>
                                 </td>
                                 <td>
-                                    <button type="button" onClick={() => updateTask(taskState)} className="btn border-secondary btn-light btn-sm">Save</button>
-                                    <button type="button" onClick={() => settaskState(formTemplate)} className="mx-2 btn border-secondary btn-light btn-sm">Cancel</button>
+                                    <button type="button" onClick={() => updateTask(taskState)} className="btn border-secondary btn-light btn-sm">Sa</button>
+                                    <button type="button" onClick={() => settaskState(formTemplate)} className="mx-2 btn border-secondary btn-light btn-sm">Ca</button>
                                     <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-danger">x</button>
                                 </td>
                                 </tr>
@@ -143,14 +143,3 @@ export default function Table({ project, projects, tasks, removeTask, getData })
         :  null
     )
 }
-
-
-
-{/* <td><button onClick={() => removeTask(task.id)} className="btn btn-sm btn-danger">x</button></td> */}
-////<ReadOnlyRow changeTaskId={setEditTaskId} task={task} />
-//<EditableRow task={task} changeTaskId={setEditTaskId} /> 
-{/* <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-danger">x</button> */}
-    // useEffect(() => {
-    //     settaskState(task)
-    // }, [])
-    //const [editTaskId, setEditTaskId] = useState(null)

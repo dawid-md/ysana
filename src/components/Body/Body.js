@@ -91,6 +91,13 @@ export default function Body(){
         :
             <div className="main-div">
 
+            <div className="filterPanel">
+                <button className="addTaskbtn btn btn-light btn-sm">+ Add Task</button>
+                <button className="addTaskbtnX btn btn-primary btn-sm">+ Add Task</button>
+                <button className="addTaskbtnX btn btn-secondary btn-sm">+ Add Task</button>
+                <button className="addTaskbtnX btn btn-warning btn-sm">+ Add Task</button>
+            </div>
+
             <table className="table">
                 <thead>
                     <tr>
