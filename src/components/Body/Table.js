@@ -122,11 +122,11 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                             <>
                                 <tr>
                                     <td><img src="checkmark.png" width="20" height="20"></img>{task.taskName}</td>
-                                    <td>{task.assignee}</td>
-                                    <td>{task.duedate}</td>
+                                    <td><span>{task.assignee}</span></td>
+                                    <td><span>{task.duedate}</span></td>
                                     <td><span className={task.priority}>{task.priority}</span></td>
                                     <td><span className={(task.status).replace(/ /g, '_')}>{task.status}</span></td>
-                                    <td>{task.project}</td>
+                                    <td><span>{task.project}</span></td>
                                     <td><button type="button" onClick={(event) => clickEdit(event, task)} className="btn btn-light border-secondary btn-sm">edit</button></td>
                                 </tr>
                             </>

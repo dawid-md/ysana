@@ -27,7 +27,7 @@
 }
 
 .left-panel {
-  width: 14%;
+  width: 12%;
   background-color: #1a202c;
   justify-content: center;
 }
@@ -101,7 +101,7 @@ input, select{
 }
 
 img{
-  margin-left: 4px;
+  margin-left: 6px;
   margin-right: 8px;
   margin-bottom: 2px;
 }
@@ -174,10 +174,14 @@ img{
   background-color: #7a6ff0;
 }
 
-span{
-  margin-left: 35%;
+.left-panel span{
+  margin-left: 32%;
 }
 
 .fa-solid{
   padding-right: 8px;
+}
+
+th span, td span{
+  margin-left: 3%;
 }

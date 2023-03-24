@@ -33,7 +33,7 @@ export default function Body(){
         for(const key in resProjects.data){
             projectsData.push({...resProjects.data[key], id: key})
         }
-        setProjects(projectsData)
+        setProjects(projectsData.sort((a,b) => (a.projectName > b.projectName) ? 1 : ((b.projectName > a.projectName) ? -1 : 0)))
 
         const tasksData = []
         for(const key in resTasks.data){
@@ -100,13 +100,13 @@ export default function Body(){
             <table className="table">
                 <thead>
                     <tr>
-                    <th scope="col">Task name</th>
-                    <th scope="col">Assignee</th>
-                    <th scope="col">Due Date</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Project</th>
-                    <th scope="col">Action</th>
+                    <th scope="col"><span>Task name</span></th>
+                    <th scope="col"><span>Assignee</span></th>
+                    <th scope="col"><span>Due Date</span></th>
+                    <th scope="col"><span>Priority</span></th>
+                    <th scope="col"><span>Status</span></th>
+                    <th scope="col"><span>Project</span></th>
+                    <th scope="col"><span>Action</span></th>
                     </tr>
                 </thead>
             </table>
