@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AuthContext from './context/AuthContext'
 import MyTasks from './components/MyTasks/MyTasks'
 import Projects from './components/Projects/Projects'
+import Calendar from './components/Calendar/Calendar'
 
 function App() {
   const { setAuth, setUser } = useContext(AuthContext)
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/projects" element={<Projects />} />
+                <Route path="/calendar" element={<Calendar />} />
               </Routes>
             </div>
         </BrowserRouter>

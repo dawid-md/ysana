@@ -107,7 +107,7 @@ export default function Body(){
             <div className="main-div">
 
             <div className="filterPanel">
-                <button onClick={addNewTaskForm} className="addTaskbtn btn btn-light btn-sm">+ Add Task</button>
+                <button onClick={addNewTaskForm} className="addTaskbtn btn btn-light btn-sm"><i class="fa-solid fa-plus"></i> Add Task</button>
                 <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button>
                 <button className="addTaskbtnX btn btn-light btn-sm">Sort</button>
             </div>

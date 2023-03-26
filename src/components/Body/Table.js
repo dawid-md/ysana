@@ -55,7 +55,7 @@ export default function Table({ project, projects, tasks, removeTask, getData })
         tasks.length > 0 ?
             <>
             <div className="projectNameRow">
-                <button className="btn btn-light btn-sm d-inline-block" onClick={changeProjectVisibility}>v</button>
+                <button className="btn btn-light btn-sm d-inline-block" onClick={changeProjectVisibility}><span><i className="fa-solid fa-chevron-down"></i></span></button>
                 <p className="fw-bold mx-1 d-inline-block">{project}</p>
             </div>
             <form id={project} className={displayProject}>
@@ -124,12 +124,12 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                                     <button type="button" onClick={
                                             taskState.id ? () => updateTask(taskState)
                                             : () => insertTaskData()
-                                        } className="btn btn-light btn-sm"><span><i class="fa-solid fa-check"></i></span></button>
+                                        } className="btn btn-light btn-sm"><span><i className="fa-solid fa-check"></i></span></button>
                                     <button type="button" onClick={
                                             task.id == undefined ? () => removeTask(task.id)
                                             : () => {settaskState(formTemplate)}
-                                        } className="mx-2 btn btn-light btn-sm"><span><i class="fa-solid fa-ban"></i></span></button>
-                                    <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-light"><span><i class="fa-solid fa-trash"></i></span></button>
+                                        } className="mx-2 btn btn-light btn-sm"><span><i className="fa-solid fa-ban"></i></span></button>
+                                    <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-light"><span><i className="fa-solid fa-trash"></i></span></button>
                                 </td>
                                 </tr>
                             </>
