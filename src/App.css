@@ -8,7 +8,7 @@
 
 .header{
   height: 55px;
-  color: white;
+  color: rgb(255, 255, 255);
   border-bottom: 1px solid rgb(135, 135, 135);
   background-color: #1a202c;
 }
@@ -46,10 +46,10 @@ table {
   width: 100%;
 }
 
-thead{
+thead, p{
   /* background-color: #6c7ae0; */
   /* color: white; */
-  color: rgb(66, 66, 66);
+  color: rgb(82, 82, 82);
 }
 
 tr>td:first-child, th:first-of-type{

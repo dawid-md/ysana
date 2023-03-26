@@ -44,6 +44,7 @@ export default function Body(){
     }
 
     async function insertTaskData(event){
+        console.log(addFormData);
         event.preventDefault();
         const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, addFormData)
         getData()
@@ -60,7 +61,7 @@ export default function Body(){
     }
 
     useEffect(() => {
-        console.log(isAuthenticated)
+        //console.log(isAuthenticated)
         if(isAuthenticated && currentUser.token) {
             getData()
         }
@@ -81,6 +82,20 @@ export default function Body(){
         setAddFormData(newFormData)
     }
 
+    function addNewTaskForm(){
+        let newtasks = [...tasks]
+        setTasks(newtasks)
+        newtasks.unshift({
+            taskName: "",
+            assignee: "",
+            duedate: "",
+            priority: "",
+            status: "",
+            project: ""
+        })
+        console.log(newtasks);
+    }
+
     return(
         loading ? 
             <div className="d-flex justify-content-center my-1">
@@ -92,7 +107,7 @@ export default function Body(){
             <div className="main-div">
 
             <div className="filterPanel">
-                <button className="addTaskbtn btn btn-light btn-sm">+ Add Task</button>
+                <button onClick={addNewTaskForm} className="addTaskbtn btn btn-light btn-sm">+ Add Task</button>
                 <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button>
                 <button className="addTaskbtnX btn btn-light btn-sm">Sort</button>
             </div>
@@ -115,9 +130,9 @@ export default function Body(){
                     <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} />
                 )}
 
-                <div className="holder">
+                {/* <div className="holder">
 
-                <form id="addTaskForm" ref={formRef} onSubmit={insertTaskData} className="d-inline-block">
+                 <form id="addTaskForm" ref={formRef} onSubmit={insertTaskData} className="d-inline-block">
                     <input 
                       type="text"
                       name="taskName"
@@ -173,14 +188,12 @@ export default function Body(){
                                 value={pro.projectName}>
                                     {pro.projectName}</option>
                         )}
-                        {/* <option key="1" value="1">Private</option> */}
                     </select>
                     <input type="submit" value="Submit"></input>
-                </form>
-                <div className="testrow d-inline-block w-25"></div>
-                <button onClick={insertTaskData} className="btn btn-primary btn-sm">Submit</button>
-                {/* <button className="btn btn-secondary d-block mx-auto">xD</button> */}
-                </div>
+                 </form>
+                    <div className="testrow d-inline-block w-25"></div>
+                    <button type="submit" onClick={insertTaskData} className="btn btn-primary btn-sm">Submit</button>
+                </div> */}
             </div>
     )
 }

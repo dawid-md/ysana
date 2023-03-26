@@ -17,6 +17,16 @@ export default function Table({ project, projects, tasks, removeTask, getData })
     const [taskState, settaskState] = useState(formTemplate)
     const [displayProject, setdisplayProject] = useState("d-block")
 
+    async function insertTaskData(event){
+        let keys = Object.keys(taskState)
+        let newTask = taskState
+        delete newTask[keys[keys.length - 1]]
+        console.log(newTask);
+        const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, taskState)
+        settaskState(formTemplate)
+        getData()
+    }
+
     function handleEditTaskForm(event){
         event.preventDefault()
         const fieldName = event.target.getAttribute("name")
@@ -33,7 +43,6 @@ export default function Table({ project, projects, tasks, removeTask, getData })
 
     async function updateTask(taskState){
         const res = await axios.patch(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskState.id}.json?auth=${currentUser.token}`, taskState)
-        console.log(res);
         settaskState(formTemplate)
         getData()
     }
@@ -56,12 +65,12 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                 <tbody>
                     { 
                     tasks.map(task => 
-                        <Fragment key={task.id}>
-                            {taskState.id === task.id ? 
+                        <Fragment key={task.id}> 
+                            {(taskState.id === task.id || task.id == undefined) ? 
                             <>
                                 <tr>
                                 <td>
-                                    <input className="editableCell" type="text" value={taskState.taskName} name="taskName" onChange={handleEditTaskForm} />
+                                    <input className="editableCell" type="text" required="required" value={taskState.taskName} name="taskName" onChange={handleEditTaskForm} />
                                 </td>
                                 <td>
                                     <input className="editableCell" type="text" value={taskState.assignee} name="assignee" onChange={handleEditTaskForm} />
@@ -112,9 +121,15 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                                     </select>
                                 </td>
                                 <td>
-                                    <button type="button" onClick={() => updateTask(taskState)} className="btn border-secondary btn-light btn-sm">Sa</button>
-                                    <button type="button" onClick={() => settaskState(formTemplate)} className="mx-2 btn border-secondary btn-light btn-sm">Ca</button>
-                                    <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-danger">x</button>
+                                    <button type="button" onClick={
+                                            taskState.id ? () => updateTask(taskState)
+                                            : () => insertTaskData()
+                                        } className="btn btn-light btn-sm"><span><i class="fa-solid fa-check"></i></span></button>
+                                    <button type="button" onClick={
+                                            task.id == undefined ? () => removeTask(task.id)
+                                            : () => {settaskState(formTemplate)}
+                                        } className="mx-2 btn btn-light btn-sm"><span><i class="fa-solid fa-ban"></i></span></button>
+                                    <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-light"><span><i class="fa-solid fa-trash"></i></span></button>
                                 </td>
                                 </tr>
                             </>
@@ -127,7 +142,7 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                                     <td><span className={task.priority}>{task.priority}</span></td>
                                     <td><span className={(task.status).replace(/ /g, '_')}>{task.status}</span></td>
                                     <td><span>{task.project}</span></td>
-                                    <td><button type="button" onClick={(event) => clickEdit(event, task)} className="btn btn-light border-secondary btn-sm">edit</button></td>
+                                    <td><button type="button" onClick={(event) => clickEdit(event, task)} className="btn btn-light btn-sm"><span><i className="fa-solid fa-pen-to-square"></i></span></button></td>
                                 </tr>
                             </>
 
