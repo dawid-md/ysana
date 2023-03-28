@@ -126,7 +126,7 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                                             : () => insertTaskData()
                                         } className="btn btn-light btn-sm"><span><i className="fa-solid fa-check"></i></span></button>
                                     <button type="button" onClick={
-                                            task.id == undefined ? () => removeTask(task.id)
+                                            task.id == undefined ? () => {removeTask(task.id); settaskState(formTemplate)}
                                             : () => {settaskState(formTemplate)}
                                         } className="mx-2 btn btn-light btn-sm"><span><i className="fa-solid fa-ban"></i></span></button>
                                     <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-light"><span><i className="fa-solid fa-trash"></i></span></button>

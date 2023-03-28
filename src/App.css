@@ -185,3 +185,13 @@ img{
 th span, td span{
   margin-left: 3%;
 }
+
+.searchButton{
+  margin-right: 10px;
+}
+
+.svglogo{
+  height: 102px;
+  text-align: center;
+  margin-top: 45px;
+}

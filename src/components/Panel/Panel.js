@@ -1,19 +1,24 @@
 import { Link } from "react-router-dom"
 import { useContext } from "react"
 import AuthContext from "../../context/AuthContext"
+import ylogo from "../../ylogo.svg"
 
 export default function Panel(){
     const { isAuthenticated, setAuth } = useContext(AuthContext)
 
     return(
         <div className="left-panel">
-            <div className="mt-5">
+            <div className="svglogo">
+                <img src={ylogo} />
+            </div>
+
+            <div className="links">
             <Link to={"/"}>
                 <div className="panelDiv">
                     <span><i className="fa-solid fa-house"></i> Home</span>
                 </div>
             </Link>
-            <Link to={"/"}>
+            <Link to={"/inbox"}>
                 <div className="panelDiv">
                     <span><i className="fa-solid fa-envelope"></i> Inbox</span>
                 </div>
@@ -28,7 +33,7 @@ export default function Panel(){
                     <span><i className="fa-solid fa-calendar-days"></i> Calendar</span>
                 </div>
             </Link>
-            <Link to={"/"}>
+            <Link to={"/settings"}>
                 <div className="panelDiv">
                     <span><i className="fa-solid fa-gears"></i> Settings</span>
                 </div>

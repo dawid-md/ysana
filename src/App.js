@@ -10,6 +10,8 @@ import AuthContext from './context/AuthContext'
 import MyTasks from './components/MyTasks/MyTasks'
 import Projects from './components/Projects/Projects'
 import Calendar from './components/Calendar/Calendar'
+import Inbox from './components/Inbox/Inbox'
+import Settings from './components/Settings/Settings'
 
 function App() {
   const { setAuth, setUser } = useContext(AuthContext)
@@ -39,10 +41,12 @@ function App() {
               <Routes>
                 <Route path="/" element={<Body />} />
                 <Route path="/mytasks" element={<MyTasks />} />
+                <Route path="/inbox" element={<Inbox />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/calendar" element={<Calendar />} />
+                <Route path="/settings" element={<Settings />} />
               </Routes>
             </div>
         </BrowserRouter>

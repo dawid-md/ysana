@@ -5,6 +5,7 @@ import AuthContext from "../../context/AuthContext";
 import Table from "./Table";
 import ReactDatePicker from "react-datepicker";         //datepicker
 import "react-datepicker/dist/react-datepicker.css";    //datepicker
+import Searchbar from "../Searchbar/Searchbar";
 
 const formTemplate = {
     taskName: "",
@@ -107,9 +108,10 @@ export default function Body(){
             <div className="main-div">
 
             <div className="filterPanel">
-                <button onClick={addNewTaskForm} className="addTaskbtn btn btn-light btn-sm"><i class="fa-solid fa-plus"></i> Add Task</button>
-                <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button>
-                <button className="addTaskbtnX btn btn-light btn-sm">Sort</button>
+                <button onClick={addNewTaskForm} className="addTaskbtn btn btn-light btn-sm"><i className="fa-solid fa-plus"></i> Add Task</button>
+                {/* <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button> */}
+                {/* <button className="addTaskbtnX btn btn-light btn-sm">Sort</button> */}
+                <Searchbar />
             </div>
 
             <table className="table">
