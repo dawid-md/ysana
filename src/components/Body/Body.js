@@ -3,12 +3,12 @@ import { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Table from "./Table";
-import ReactDatePicker from "react-datepicker";         //datepicker
+//import ReactDatePicker from "react-datepicker";         //datepicker
 import "react-datepicker/dist/react-datepicker.css";    //datepicker
 import Searchbar from "../Searchbar/Searchbar";
 
 const formTemplate = {
-    taskName: "",
+    taskName: "asdasd asdasd",
     assignee: "",
     duedate: "",
     priority: "",
@@ -18,11 +18,12 @@ const formTemplate = {
 
 export default function Body(){
     const [projects, setProjects] = useState([])
+    let downloadedTasks = []
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true)
     const [addFormData, setAddFormData] = useState(formTemplate)
     const { isAuthenticated, currentUser } = useContext(AuthContext)
-    const [startDate, setStartDate] = useState(new Date()); //datepicker
+    //const [startDate, setStartDate] = useState(new Date()); //datepicker
     const navigate = useNavigate();
     const formRef = useRef(null)
 
@@ -40,6 +41,7 @@ export default function Body(){
         for(const key in resTasks.data){
             tasksData.push({...resTasks.data[key], id: key})
         }
+        downloadedTasks = tasksData
         setTasks(tasksData)
         setLoading(false)
     }
@@ -97,6 +99,10 @@ export default function Body(){
         console.log(newtasks);
     }
 
+    function searchHandler(searchterm){
+        setTasks(downloadedTasks.filter((item) => item.taskName.toLowerCase().includes(searchterm.toLowerCase())))
+    }
+
     return(
         loading ? 
             <div className="d-flex justify-content-center my-1">
@@ -111,7 +117,7 @@ export default function Body(){
                 <button onClick={addNewTaskForm} className="addTaskbtn btn btn-light btn-sm"><i className="fa-solid fa-plus"></i> Add Task</button>
                 {/* <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button> */}
                 {/* <button className="addTaskbtnX btn btn-light btn-sm">Sort</button> */}
-                <Searchbar />
+                <Searchbar onSearch={searchHandler}/>
             </div>
 
             <table className="table">
