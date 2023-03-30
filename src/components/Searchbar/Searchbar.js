@@ -5,7 +5,7 @@ export default function Searchbar(props){
     const inputRef = useRef(null)
 
     function search(searchterm){
-        console.log(searchterm);
+        //console.log(searchterm);
         props.onSearch(searchterm)
     }
 

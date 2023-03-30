@@ -16,9 +16,10 @@ const formTemplate = {
     project: ""
 }
 
+let downloadedTasks;
+
 export default function Body(){
     const [projects, setProjects] = useState([])
-    let downloadedTasks = []
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true)
     const [addFormData, setAddFormData] = useState(formTemplate)
@@ -64,7 +65,6 @@ export default function Body(){
     }
 
     useEffect(() => {
-        //console.log(isAuthenticated)
         if(isAuthenticated && currentUser.token) {
             getData()
         }
@@ -100,7 +100,8 @@ export default function Body(){
     }
 
     function searchHandler(searchterm){
-        setTasks(downloadedTasks.filter((item) => item.taskName.toLowerCase().includes(searchterm.toLowerCase())))
+        //setTasks(tasks.filter((item) => item.taskName.toLowerCase().includes(searchterm.toLowerCase())))
+        searchterm == "" ? setTasks(downloadedTasks) : setTasks(downloadedTasks.filter((item) => item.taskName.toLowerCase().includes(searchterm.toLowerCase())))
     }
 
     return(
