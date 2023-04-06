@@ -3,10 +3,20 @@ import axios from "axios"
 import Table from "../Body/Table"
 import AuthContext from "../../context/AuthContext"
 
+const formTemplate = {
+    taskName: "asdasd asdasd",
+    assignee: "",
+    duedate: "",
+    priority: "",
+    status: "",
+    project: ""
+}
+
 export default function MyTasks(){
     const { isAuthenticated, currentUser } = useContext(AuthContext)
     const [projects, setProjects] = useState([])
     const [tasks, setTasks] = useState([])
+    const [taskState, settaskState] = useState(formTemplate)
     const [loading, setLoading] = useState(true)
 
     async function getData(){
@@ -65,7 +75,7 @@ export default function MyTasks(){
             </table>
 
                 {projects.map(pro => 
-                    <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} />
+                    <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} taskState={taskState} settaskState={settaskState} />
                 )}
             </div>
     )

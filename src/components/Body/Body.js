@@ -21,10 +21,12 @@ let downloadedTasks;
 export default function Body(){
     const [projects, setProjects] = useState([])
     const [tasks, setTasks] = useState([])
+    const [taskState, settaskState] = useState(formTemplate)
     const [loading, setLoading] = useState(true)
     const [addFormData, setAddFormData] = useState(formTemplate)
+    const [btnAddTask, setbtnAddTask] = useState(true)
     const { isAuthenticated, currentUser } = useContext(AuthContext)
-    //const [startDate, setStartDate] = useState(new Date()); //datepicker
+
     const navigate = useNavigate();
     const formRef = useRef(null)
 
@@ -45,18 +47,6 @@ export default function Body(){
         downloadedTasks = tasksData
         setTasks(tasksData)
         setLoading(false)
-    }
-
-    async function insertTaskData(event){
-        console.log(addFormData);
-        event.preventDefault();
-        const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, addFormData)
-        getData()
-        setAddFormData(formTemplate)
-        formRef.current.taskName.value = "";
-        formRef.current.assignee.value = "";
-        formRef.current.duedate.value = "";
-        formRef.current.reset()
     }
 
     async function removeTask(taskID){
@@ -86,17 +76,24 @@ export default function Body(){
     }
 
     function addNewTaskForm(){
-        let newtasks = [...tasks]
-        setTasks(newtasks)
-        newtasks.unshift({
-            taskName: "",
-            assignee: "",
-            duedate: "",
-            priority: "",
-            status: "",
-            project: ""
-        })
-        console.log(newtasks);
+        if(btnAddTask === true){
+            let newtasks = [...tasks]
+            setTasks(newtasks)
+            newtasks.unshift({
+                taskName: "",
+                assignee: "",
+                duedate: "",
+                priority: "",
+                status: "",
+                project: "",
+                id: "new"
+            });
+        }
+        else{
+            let newtasks = [...tasks]
+            newtasks.shift()
+            setTasks(newtasks)
+        }
     }
 
     function searchHandler(searchterm){
@@ -115,7 +112,8 @@ export default function Body(){
             <div className="main-div">
 
             <div className="filterPanel">
-                <button onClick={addNewTaskForm} className="addTaskbtn btn btn-light btn-sm"><i className="fa-solid fa-plus"></i> Add Task</button>
+                {btnAddTask ? <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className="addTaskbtn btn btn-light btn-sm"><i className="fa-solid fa-plus"></i> Add Task</button> : 
+                 <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className="addTaskbtn btn btn-light border-danger btn-sm"><i className="fa-solid fa-minus"></i> Cancel</button> }
                 {/* <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button> */}
                 {/* <button className="addTaskbtnX btn btn-light btn-sm">Sort</button> */}
                 <Searchbar onSearch={searchHandler}/>
@@ -136,7 +134,7 @@ export default function Body(){
             </table>
 
                 {projects.map(pro => 
-                    <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} />
+                    <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} taskState={taskState} settaskState={settaskState} btnAddTask={btnAddTask} setbtnAddTask={setbtnAddTask} />
                 )}
 
                 {/* <div className="holder">
@@ -206,3 +204,16 @@ export default function Body(){
             </div>
     )
 }
+
+
+// async function insertTaskData(event){
+//     console.log(addFormData);
+//     event.preventDefault();
+//     const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, addFormData)
+//     getData()
+//     setAddFormData(formTemplate)
+//     formRef.current.taskName.value = "";
+//     formRef.current.assignee.value = "";
+//     formRef.current.duedate.value = "";
+//     formRef.current.reset()
+// }

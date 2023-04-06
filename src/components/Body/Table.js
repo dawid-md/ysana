@@ -12,9 +12,9 @@ const formTemplate = {
     id: ""
 }
 
-export default function Table({ project, projects, tasks, removeTask, getData }){
+export default function Table({ project, projects, tasks, removeTask, getData, taskState, settaskState, btnAddTask, setbtnAddTask }){
     const { currentUser } = useContext(AuthContext)
-    const [taskState, settaskState] = useState(formTemplate)
+    //const [taskState, settaskState] = useState(formTemplate)
     const [displayProject, setdisplayProject] = useState("d-block")
 
     async function insertTaskData(event){
@@ -66,7 +66,7 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                     { 
                     tasks.map(task => 
                         <Fragment key={task.id}> 
-                            {(taskState.id === task.id || task.id == undefined) ? 
+                            {(taskState.id === task.id || task.id == "new") ? 
                             <>
                                 <tr>
                                 <td>
@@ -125,11 +125,16 @@ export default function Table({ project, projects, tasks, removeTask, getData })
                                             taskState.id ? () => updateTask(taskState)
                                             : () => insertTaskData()
                                         } className="btn btn-light btn-sm"><span><i className="fa-solid fa-check"></i></span></button>
-                                    <button type="button" onClick={
+
+                                    {btnAddTask == true ?
+                                    <><button type="button" onClick={
                                             task.id == undefined ? () => {removeTask(task.id); settaskState(formTemplate)}
                                             : () => {settaskState(formTemplate)}
                                         } className="mx-2 btn btn-light btn-sm"><span><i className="fa-solid fa-ban"></i></span></button>
                                     <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-light"><span><i className="fa-solid fa-trash"></i></span></button>
+                                    </>
+                                    : null
+                                    }
                                 </td>
                                 </tr>
                             </>
