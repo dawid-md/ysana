@@ -54,10 +54,12 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
     return(
         tasks.length > 0 ?
             <>
-            <div className="projectNameRow">
-                <button className="btn btn-light btn-sm d-inline-block" onClick={changeProjectVisibility}><span><i className="fa-solid fa-chevron-down"></i></span></button>
-                <p className="fw-bold mx-1 d-inline-block">{project}</p>
-            </div>
+            {btnAddTask == false && project == "" ? null :  //hide project name holder when adding new task
+                <div className="projectNameRow">
+                    <button className="btn btn-light btn-sm d-inline-block mx-1" onClick={changeProjectVisibility}><span>{displayProject == "d-none" ? <i className="fa-solid fa-chevron-down"></i> : <i className="fa-solid fa-chevron-up"></i>}</span></button>
+                    <p className="fw-bold mx-1 d-inline-block">{project}</p>
+                </div>
+            }
             <form id={project} className={displayProject}>
             <table className="table">
                 <thead>
