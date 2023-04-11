@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";    //datepicker
 import Searchbar from "../Searchbar/Searchbar";
 
 const formTemplate = {
-    taskName: "asdasd asdasd",
+    taskName: "...",
     assignee: "",
     duedate: "",
     priority: "",
@@ -23,8 +23,9 @@ export default function Body(){
     const [tasks, setTasks] = useState([])
     const [taskState, settaskState] = useState(formTemplate)
     const [loading, setLoading] = useState(true)
-    const [addFormData, setAddFormData] = useState(formTemplate)
+    //const [addFormData, setAddFormData] = useState(formTemplate)
     const [btnAddTask, setbtnAddTask] = useState(true)
+    const [btnAddTaskDisabled, setbtnAddTaskDisabled] = useState(false)
     const { isAuthenticated, currentUser } = useContext(AuthContext)
 
     const navigate = useNavigate();
@@ -63,19 +64,7 @@ export default function Body(){
         }
     }, [isAuthenticated, currentUser])
 
-    function handleAddFormChange(event){
-        event.preventDefault()
-
-        const fieldName = event.target.getAttribute("name")
-        const fieldValue = event.target.value
-
-        const newFormData = { ...addFormData }
-        newFormData[fieldName] = fieldValue
-
-        setAddFormData(newFormData)
-    }
-
-    function addNewTaskForm(){
+    function addNewTaskForm(){          //show and hide new task form
         if(btnAddTask === true){
             let newtasks = [...tasks]
             setTasks(newtasks)
@@ -112,8 +101,8 @@ export default function Body(){
             <div className="main-div">
 
             <div className="filterPanel">
-                {btnAddTask ? <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className="addTaskbtn btn btn-light btn-sm"><i className="fa-solid fa-plus"></i> Add Task</button> : 
-                 <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className="addTaskbtn btn btn-light border-danger btn-sm"><i className="fa-solid fa-minus"></i> Cancel</button> }
+                {btnAddTask ? <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className={`addTaskbtn btn btn-light btn-sm ${btnAddTaskDisabled ? "disabled" : ""}`}><i className="fa-solid fa-plus"></i> Add Task</button> 
+                            : <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className={`addTaskbtn btn btn-light border-danger btn-sm ${btnAddTaskDisabled ? "disabled" : ""}`}><i className="fa-solid fa-minus"></i> Cancel</button> }
                 {/* <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button> */}
                 {/* <button className="addTaskbtnX btn btn-light btn-sm">Sort</button> */}
                 <Searchbar onSearch={searchHandler}/>
@@ -134,7 +123,7 @@ export default function Body(){
             </table>
 
                 {projects.map(pro => 
-                    <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} taskState={taskState} settaskState={settaskState} btnAddTask={btnAddTask} setbtnAddTask={setbtnAddTask} />
+                    <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} setTasks={setTasks} removeTask={removeTask} getData={getData} taskState={taskState} settaskState={settaskState} btnAddTask={btnAddTask} setbtnAddTask={setbtnAddTask} setbtnAddTaskDisabled={setbtnAddTaskDisabled} />
                 )}
 
                 {/* <div className="holder">
@@ -216,4 +205,16 @@ export default function Body(){
 //     formRef.current.assignee.value = "";
 //     formRef.current.duedate.value = "";
 //     formRef.current.reset()
+// }
+
+// function handleAddFormChange(event){
+//     event.preventDefault()
+
+//     const fieldName = event.target.getAttribute("name")
+//     const fieldValue = event.target.value
+
+//     const newFormData = { ...addFormData }
+//     newFormData[fieldName] = fieldValue
+
+//     setAddFormData(newFormData)
 // }

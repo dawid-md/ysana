@@ -139,6 +139,7 @@ img{
 }
 
 .addTaskbtn{
+  width: 89px;
   border: 1px solid rgb(194, 194, 194);
   margin: auto auto auto 10px;
 }

@@ -12,7 +12,7 @@ const formTemplate = {
     id: ""
 }
 
-export default function Table({ project, projects, tasks, removeTask, getData, taskState, settaskState, btnAddTask, setbtnAddTask }){
+export default function Table({ project, projects, tasks, removeTask, getData, taskState, settaskState, btnAddTask, setbtnAddTask, setbtnAddTaskDisabled }){
     const { currentUser } = useContext(AuthContext)
     //const [taskState, settaskState] = useState(formTemplate)
     const [displayProject, setdisplayProject] = useState("d-block")
@@ -20,8 +20,8 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
     async function insertTaskData(event){
         let keys = Object.keys(taskState)
         let newTask = taskState
-        delete newTask[keys[keys.length - 1]]
-        console.log(newTask);
+        //delete newTask[keys[keys.length - 1]]
+        //console.log(newTask);
         const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, taskState)
         settaskState(formTemplate)
         getData()
@@ -122,16 +122,16 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
                                 </td>
                                 <td>
                                     <button type="button" onClick={
-                                            taskState.id ? () => updateTask(taskState)
-                                            : () => insertTaskData()
+                                            taskState.id ? () => {updateTask(taskState); setbtnAddTaskDisabled(false)}          //update task confirm
+                                            : () => {insertTaskData(); setbtnAddTask(true); setbtnAddTaskDisabled(false)}     //insert new task confirm
                                         } className="btn btn-light btn-sm"><span><i className="fa-solid fa-check"></i></span></button>
 
                                     {btnAddTask == true ?
                                     <><button type="button" onClick={
-                                            task.id == undefined ? () => {removeTask(task.id); settaskState(formTemplate)}
-                                            : () => {settaskState(formTemplate)}
+                                            task.id == undefined ? () => {removeTask(task.id); settaskState(formTemplate); setbtnAddTaskDisabled(false)}
+                                            : () => {settaskState(formTemplate); setbtnAddTaskDisabled(false)}
                                         } className="mx-2 btn btn-light btn-sm"><span><i className="fa-solid fa-ban"></i></span></button>
-                                    <button type="button" onClick={() => removeTask(task.id)} className="btn btn-sm btn-light"><span><i className="fa-solid fa-trash"></i></span></button>
+                                    <button type="button" onClick={() => {removeTask(task.id); setbtnAddTaskDisabled(false)}} className="btn btn-sm btn-light"><span><i className="fa-solid fa-trash"></i></span></button>
                                     </>
                                     : null
                                     }
@@ -147,7 +147,7 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
                                     <td><span className={task.priority}>{task.priority}</span></td>
                                     <td><span className={(task.status).replace(/ /g, '_')}>{task.status}</span></td>
                                     <td><span>{task.project}</span></td>
-                                    <td><button type="button" onClick={(event) => clickEdit(event, task)} className="btn btn-light btn-sm"><span><i className="fa-solid fa-pen-to-square"></i></span></button></td>
+                                    <td><button type="button" onClick={(event) => {clickEdit(event, task); setbtnAddTaskDisabled(true);}} className={`btn btn-light btn-sm ${btnAddTask ? "" : " disabled"}`}><span><i className="fa-solid fa-pen-to-square"></i></span></button></td>
                                 </tr>
                             </>
 
