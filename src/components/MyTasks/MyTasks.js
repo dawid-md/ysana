@@ -2,10 +2,10 @@ import { useState, useEffect, useContext } from "react"
 import axios from "axios"
 import Table from "../Body/Table"
 import AuthContext from "../../context/AuthContext"
-import TopPanel from "../TopPanel/TopPanel"
+import Searchbar from "../Searchbar/Searchbar";
 
 const formTemplate = {
-    taskName: "asdasd asdasd",
+    taskName: ",,,",
     assignee: "",
     duedate: "",
     priority: "",
@@ -13,15 +13,18 @@ const formTemplate = {
     project: ""
 }
 
+let downloadedTasks;
+
 export default function MyTasks(){
     const { isAuthenticated, currentUser } = useContext(AuthContext)
     const [projects, setProjects] = useState([])
     const [tasks, setTasks] = useState([])
     const [taskState, settaskState] = useState(formTemplate)
     const [loading, setLoading] = useState(true)
+    const [btnAddTask, setbtnAddTask] = useState(true)
+    const [btnAddTaskDisabled, setbtnAddTaskDisabled] = useState(false)
 
     async function getData(){
-        //console.log(currentUser);
         const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`)
         const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`)
 
@@ -35,6 +38,7 @@ export default function MyTasks(){
         for(const key in resTasks.data){
             resTasks.data[key].assignee === currentUser.displayName && tasksData.push({...resTasks.data[key], id: key})
         }
+        downloadedTasks = tasksData
         setTasks(tasksData)
         setLoading(false)
     }
@@ -51,6 +55,31 @@ export default function MyTasks(){
         }
     }, [isAuthenticated, currentUser.token])
 
+    function addNewTaskForm(){          //show and hide new task form
+        if(btnAddTask === true){
+            let newtasks = [...tasks]
+            setTasks(newtasks)
+            newtasks.unshift({
+                taskName: "",
+                assignee: "",
+                duedate: "",
+                priority: "",
+                status: "",
+                project: "",
+                id: "new"
+            });
+        }
+        else{
+            let newtasks = [...tasks]
+            newtasks.shift()
+            setTasks(newtasks)
+        }
+    }
+
+    function searchHandler(searchterm){
+        searchterm == "" ? setTasks(downloadedTasks) : setTasks(downloadedTasks.filter((item) => item.taskName.toLowerCase().includes(searchterm.toLowerCase())))
+    }
+
     return(
         loading ? 
             <div className="d-flex justify-content-center my-1">
@@ -60,7 +89,14 @@ export default function MyTasks(){
             </div>
         :
             <div className="main-div">
-                <TopPanel />
+            <div className="filterPanel">
+                {btnAddTask ? <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className={`addTaskbtn btn btn-light btn-sm ${btnAddTaskDisabled ? "disabled" : ""}`}><i className="fa-solid fa-plus"></i> Add Task</button> 
+                            : <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className={`addTaskbtn btn btn-light border-danger btn-sm ${btnAddTaskDisabled ? "disabled" : ""}`}><i className="fa-solid fa-minus"></i> Cancel</button> }
+                {/* <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button> */}
+                {/* <button className="addTaskbtnX btn btn-light btn-sm">Sort</button> */}
+                <Searchbar onSearch={searchHandler}/>
+            </div>
+                {/* <TopPanel tasks={tasks} setTasks={setTasks} addNewTaskForm={addNewTaskForm} onSearch={searchHandler} btnAddTask={btnAddTask} setbtnAddTask={setbtnAddTask} btnAddTaskDisabled={btnAddTaskDisabled} /> */}
                 <table className="table">
                     <thead>
                         <tr>
@@ -75,7 +111,7 @@ export default function MyTasks(){
                     </thead>
                 </table>
                 {projects.map(pro => 
-                    <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} taskState={taskState} settaskState={settaskState} />
+                    <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} setTasks={setTasks} removeTask={removeTask} getData={getData} taskState={taskState} settaskState={settaskState} btnAddTask={btnAddTask} setbtnAddTask={setbtnAddTask} setbtnAddTaskDisabled={setbtnAddTaskDisabled} />
                 )}
             </div>
     )

@@ -14,14 +14,12 @@ const formTemplate = {
 
 export default function Table({ project, projects, tasks, removeTask, getData, taskState, settaskState, btnAddTask, setbtnAddTask, setbtnAddTaskDisabled }){
     const { currentUser } = useContext(AuthContext)
-    //const [taskState, settaskState] = useState(formTemplate)
     const [displayProject, setdisplayProject] = useState("d-block")
 
     async function insertTaskData(event){
         let keys = Object.keys(taskState)
         let newTask = taskState
         //delete newTask[keys[keys.length - 1]]
-        //console.log(newTask);
         const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, taskState)
         settaskState(formTemplate)
         getData()
@@ -37,7 +35,6 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
     }
 
     function clickEdit(event, task){
-        //event.preventDefault()
         settaskState(task)
     }
 

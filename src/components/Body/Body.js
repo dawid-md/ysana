@@ -23,13 +23,11 @@ export default function Body(){
     const [tasks, setTasks] = useState([])
     const [taskState, settaskState] = useState(formTemplate)
     const [loading, setLoading] = useState(true)
-    //const [addFormData, setAddFormData] = useState(formTemplate)
     const [btnAddTask, setbtnAddTask] = useState(true)
     const [btnAddTaskDisabled, setbtnAddTaskDisabled] = useState(false)
     const { isAuthenticated, currentUser } = useContext(AuthContext)
 
     const navigate = useNavigate();
-    //const formRef = useRef(null)
 
     async function getData(){
         const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`)
@@ -86,7 +84,6 @@ export default function Body(){
     }
 
     function searchHandler(searchterm){
-        //setTasks(tasks.filter((item) => item.taskName.toLowerCase().includes(searchterm.toLowerCase())))
         searchterm == "" ? setTasks(downloadedTasks) : setTasks(downloadedTasks.filter((item) => item.taskName.toLowerCase().includes(searchterm.toLowerCase())))
     }
 
