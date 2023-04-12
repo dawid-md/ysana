@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react"
 import axios from "axios"
 import Table from "../Body/Table"
 import AuthContext from "../../context/AuthContext"
+import TopPanel from "../TopPanel/TopPanel"
 
 const formTemplate = {
     taskName: "asdasd asdasd",
@@ -59,21 +60,20 @@ export default function MyTasks(){
             </div>
         :
             <div className="main-div">
-
-            <table className="table">
-                <thead>
-                    <tr>
-                    <th scope="col"><span>Task name</span></th>
-                    <th scope="col"><span>Assignee</span></th>
-                    <th scope="col"><span>Due Date</span></th>
-                    <th scope="col"><span>Priority</span></th>
-                    <th scope="col"><span>Status</span></th>
-                    <th scope="col"><span>Project</span></th>
-                    <th scope="col"><span>Action</span></th>
-                    </tr>
-                </thead>
-            </table>
-
+                <TopPanel />
+                <table className="table">
+                    <thead>
+                        <tr>
+                        <th scope="col"><span>Task name</span></th>
+                        <th scope="col"><span>Assignee</span></th>
+                        <th scope="col"><span>Due Date</span></th>
+                        <th scope="col"><span>Priority</span></th>
+                        <th scope="col"><span>Status</span></th>
+                        <th scope="col"><span>Project</span></th>
+                        <th scope="col"><span>Action</span></th>
+                        </tr>
+                    </thead>
+                </table>
                 {projects.map(pro => 
                     <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} removeTask={removeTask} getData={getData} taskState={taskState} settaskState={settaskState} />
                 )}

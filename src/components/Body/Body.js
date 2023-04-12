@@ -29,7 +29,7 @@ export default function Body(){
     const { isAuthenticated, currentUser } = useContext(AuthContext)
 
     const navigate = useNavigate();
-    const formRef = useRef(null)
+    //const formRef = useRef(null)
 
     async function getData(){
         const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`)
@@ -126,7 +126,36 @@ export default function Body(){
                     <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} setTasks={setTasks} removeTask={removeTask} getData={getData} taskState={taskState} settaskState={settaskState} btnAddTask={btnAddTask} setbtnAddTask={setbtnAddTask} setbtnAddTaskDisabled={setbtnAddTaskDisabled} />
                 )}
 
-                {/* <div className="holder">
+            </div>
+    )
+}
+
+
+// async function insertTaskData(event){
+//     console.log(addFormData);
+//     event.preventDefault();
+//     const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, addFormData)
+//     getData()
+//     setAddFormData(formTemplate)
+//     formRef.current.taskName.value = "";
+//     formRef.current.assignee.value = "";
+//     formRef.current.duedate.value = "";
+//     formRef.current.reset()
+// }
+
+// function handleAddFormChange(event){
+//     event.preventDefault()
+
+//     const fieldName = event.target.getAttribute("name")
+//     const fieldValue = event.target.value
+
+//     const newFormData = { ...addFormData }
+//     newFormData[fieldName] = fieldValue
+
+//     setAddFormData(newFormData)
+// }
+
+{/* <div className="holder">
 
                  <form id="addTaskForm" ref={formRef} onSubmit={insertTaskData} className="d-inline-block">
                     <input 
@@ -190,31 +219,3 @@ export default function Body(){
                     <div className="testrow d-inline-block w-25"></div>
                     <button type="submit" onClick={insertTaskData} className="btn btn-primary btn-sm">Submit</button>
                 </div> */}
-            </div>
-    )
-}
-
-
-// async function insertTaskData(event){
-//     console.log(addFormData);
-//     event.preventDefault();
-//     const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, addFormData)
-//     getData()
-//     setAddFormData(formTemplate)
-//     formRef.current.taskName.value = "";
-//     formRef.current.assignee.value = "";
-//     formRef.current.duedate.value = "";
-//     formRef.current.reset()
-// }
-
-// function handleAddFormChange(event){
-//     event.preventDefault()
-
-//     const fieldName = event.target.getAttribute("name")
-//     const fieldValue = event.target.value
-
-//     const newFormData = { ...addFormData }
-//     newFormData[fieldName] = fieldValue
-
-//     setAddFormData(newFormData)
-// }
