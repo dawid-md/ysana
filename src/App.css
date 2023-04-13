@@ -189,10 +189,17 @@ th span, td span{
 
 .searchButton{
   margin-right: 10px;
+  width: 240px;
 }
 
 .svglogo{
   height: 102px;
   text-align: center;
   margin-top: 45px;
+}
+
+.calendar{
+  margin-left: 20px;
+  margin-top: 20px;
+  width: 50%;
 }
