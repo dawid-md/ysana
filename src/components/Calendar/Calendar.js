@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const Calendar = () => {
   const [date, setDate] = useState(new Date());
+  const [todayDate, settodayDate] = useState(new Date());
   const [tasks, setTasks] = useState([])
   const [tasksByDate, settasksByDate] = useState([])
   const [loading, setLoading] = useState(true)
@@ -31,6 +32,15 @@ const Calendar = () => {
     else if(isAuthenticated === false){
         //navigate("/login")
     }
+    //let today = new Date()
+    // let yyyy = today.getFullYear()
+    // let mm = String(today.getMonth() + 1).padStart(2, '0')
+    // let dd = String(today.getDate()).padStart(2, '0')
+    // today = `${yyyy}-${mm}-${dd}`
+    //settodayDate(today)
+
+    //console.log(todayDate.getMonth()+1)
+    
 }, [isAuthenticated, currentUser])
 
   const getCurrentDateFormatted = () => {
@@ -67,7 +77,7 @@ const Calendar = () => {
         }
       }
     }
-    //console.log(matrix);
+    console.log(matrix);
     return matrix;
   };
   
@@ -102,7 +112,11 @@ const Calendar = () => {
           {generateMatrix().map((row, rowIndex) => (
             <tr key={rowIndex}>
               {row.map((cell, cellIndex) => (
-                <td key={cellIndex}><span>{cell}</span><span className='text-right'>{tasksByDate[xDate.substring(0,8) + ("0" + cell).slice(-2)]}</span></td>
+                <td key={cellIndex} className={(((date.getMonth()) == (todayDate.getMonth()) && 
+                (cell == todayDate.getDate())) ? 'todayCard fw-bold bg-light' : 'notToday')} >
+                  <span>{cell}</span>
+                  <span className="tasksAmount">{tasksByDate[xDate.substring(0,8) + ("0" + cell).slice(-2)]}</span>
+                </td>
               ))}
             </tr>
           ))}

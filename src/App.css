@@ -203,3 +203,10 @@ th span, td span{
   margin-top: 20px;
   width: 50%;
 }
+
+.tasksAmount{
+  margin-left: auto;
+  margin-right: 3px;
+  float: right;
+  font-size: small;
+}
