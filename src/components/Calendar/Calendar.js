@@ -9,6 +9,7 @@ const Calendar = () => {
   const [tasksByDate, settasksByDate] = useState([])
   const [loading, setLoading] = useState(true)
   const { isAuthenticated, currentUser } = useContext(AuthContext)
+  const [showModal, setShowModal] = useState(false)
 
   async function getData(){
     const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`)
@@ -19,7 +20,6 @@ const Calendar = () => {
         if(tasksByDateCounter[resTasks.data[key].duedate] == undefined){tasksByDateCounter[resTasks.data[key].duedate] = 0}
         tasksByDateCounter[resTasks.data[key].duedate] += 1
     }
-    //console.log(tasksByDateCounter);
     setTasks(tasksData)
     settasksByDate(tasksByDateCounter)
     setLoading(false)
@@ -32,14 +32,6 @@ const Calendar = () => {
     else if(isAuthenticated === false){
         //navigate("/login")
     }
-    //let today = new Date()
-    // let yyyy = today.getFullYear()
-    // let mm = String(today.getMonth() + 1).padStart(2, '0')
-    // let dd = String(today.getDate()).padStart(2, '0')
-    // today = `${yyyy}-${mm}-${dd}`
-    //settodayDate(today)
-
-    //console.log(todayDate.getMonth()+1)
     
 }, [isAuthenticated, currentUser])
 
@@ -77,7 +69,7 @@ const Calendar = () => {
         }
       }
     }
-    console.log(matrix);
+    //console.log(matrix);
     return matrix;
   };
   
@@ -88,9 +80,6 @@ const Calendar = () => {
   
   const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   let xDate = getCurrentDateFormatted()
-  //console.log(xDate.substring(0,8) + 22);
-  //console.log(tasksByDate['2023-03-17']);
-  //console.log(tasksByDate[(xDate.substring(0,8) + 22)]);
   
   return (
     !loading ? 
@@ -115,13 +104,21 @@ const Calendar = () => {
                 <td key={cellIndex} className={(((date.getMonth()) == (todayDate.getMonth()) && 
                 (cell == todayDate.getDate())) ? 'todayCard fw-bold bg-light' : 'notToday')} >
                   <span>{cell}</span>
-                  <span className="tasksAmount">{tasksByDate[xDate.substring(0,8) + ("0" + cell).slice(-2)]}</span>
+                  <span className="tasksAmount" 
+                        onMouseEnter={() => setShowModal(true)}
+                        onMouseLeave={() => setShowModal(false)}>{tasksByDate[xDate.substring(0,8) + ("0" + cell).slice(-2)]}
+                  </span>
                 </td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
+      {showModal && (
+        <div className='modal'>
+          <p>modal content</p>
+        </div>
+      )}
     </div>
     : null
   );
