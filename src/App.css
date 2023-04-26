@@ -204,13 +204,13 @@ th span, td span{
   width: 50%;
 }
 
-.modal {
+.modalWin {
   display: block;
-  /* z-index: 1; */
   background-color: white;
   border: 1px solid #ccc;
-  width: 100px;
+  width: 400px;
   height: 100px;
+  margin: 25px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -224,8 +224,4 @@ th span, td span{
 
 .tasksAmount:hover{
   font-weight: bold;
-}
-
-.tasksAmount:hover .modal {
-  display: block !important;
 }

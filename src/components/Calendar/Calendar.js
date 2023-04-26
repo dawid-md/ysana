@@ -6,20 +6,27 @@ const Calendar = () => {
   const [date, setDate] = useState(new Date());
   const [todayDate, settodayDate] = useState(new Date());
   const [tasks, setTasks] = useState([])
-  const [tasksByDate, settasksByDate] = useState([])
+  const [tasksByDate, settasksByDate] = useState({})
+  //const [tasksByDate, settasksByDate] = useState([])
   const [loading, setLoading] = useState(true)
   const { isAuthenticated, currentUser } = useContext(AuthContext)
   const [showModal, setShowModal] = useState(false)
+  const [modalContent, setmodalContent] = useState([])
 
   async function getData(){
     const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`)
     const tasksData = []
-    const tasksByDateCounter = []
+    //const tasksByDateCounter = []
+    const tasksByDateCounter = {}
     for(const key in resTasks.data){
         tasksData.push({...resTasks.data[key], id: key})
-        if(tasksByDateCounter[resTasks.data[key].duedate] == undefined){tasksByDateCounter[resTasks.data[key].duedate] = 0}
-        tasksByDateCounter[resTasks.data[key].duedate] += 1
+        // if(tasksByDateCounter[resTasks.data[key].duedate] == undefined){tasksByDateCounter[resTasks.data[key].duedate] = 0}
+        // tasksByDateCounter[resTasks.data[key].duedate] += 1
+        if(tasksByDateCounter[resTasks.data[key].duedate] == undefined){tasksByDateCounter[resTasks.data[key].duedate] = [0, []]}
+        tasksByDateCounter[resTasks.data[key].duedate][0] += 1
+        tasksByDateCounter[resTasks.data[key].duedate][1].push(resTasks.data[key])
     }
+    //console.log(tasksByDateCounter);
     setTasks(tasksData)
     settasksByDate(tasksByDateCounter)
     setLoading(false)
@@ -38,8 +45,8 @@ const Calendar = () => {
   const getCurrentDateFormatted = () => {
     const d = new Date(date);
     const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so we add 1 and pad with a leading 0 if needed
-    const day = String(d.getDate()).padStart(2, '0'); // Pad with a leading 0 if needed
+    const month = String(d.getMonth() + 1).padStart(2, '0'); //Months are 0-based, so we add 1 and pad with a leading 0 if needed
+    const day = String(d.getDate()).padStart(2, '0');       //Pad with a leading 0 if needed
     return `${year}-${month}-${day}`;
   }
 
@@ -105,8 +112,12 @@ const Calendar = () => {
                 (cell == todayDate.getDate())) ? 'todayCard fw-bold bg-light' : 'notToday')} >
                   <span>{cell}</span>
                   <span className="tasksAmount" 
-                        onMouseEnter={() => setShowModal(true)}
-                        onMouseLeave={() => setShowModal(false)}>{tasksByDate[xDate.substring(0,8) + ("0" + cell).slice(-2)]}
+                        onMouseEnter={() => {
+                          setShowModal(true)
+                          setmodalContent(tasksByDate[xDate.substring(0,8) + ("0" + cell).slice(-2)][1])
+                        }}
+                        onMouseLeave={() => {setShowModal(false)}}>      
+                        {tasksByDate.hasOwnProperty(xDate.substring(0,8) + ("0" + cell).slice(-2)) ? tasksByDate[xDate.substring(0,8) + ("0" + cell).slice(-2)][0] : null}
                   </span>
                 </td>
               ))}
@@ -115,8 +126,8 @@ const Calendar = () => {
         </tbody>
       </table>
       {showModal && (
-        <div className='modal'>
-          <p>modal content</p>
+        <div className='modalWin'>
+          {modalContent.map((task, index) => <p key={task.id+"s"}>{task.assignee} | {task.taskName} | {task.priority} | {task.status}</p>)}
         </div>
       )}
     </div>
