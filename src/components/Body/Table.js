@@ -75,7 +75,7 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
                                     <input className="editableCell" type="text" value={taskState.assignee} name="assignee" onChange={handleEditTaskForm} />
                                 </td>
                                 <td>
-                                    <input className="editableCell" type="date" value={taskState.duedate} name="duedate" onChange={handleEditTaskForm} />
+                                    <input className="editableCell" type="date" style={{minHeight:"26px"}} value={taskState.duedate} name="duedate" onChange={handleEditTaskForm} />
                                 </td>
                                 <td>
                                     <select 
