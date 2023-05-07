@@ -20,9 +20,10 @@
   align-items: center;
 }
 
+/* position of user name */
 .header > h3:last-child{
   margin-left: auto;
-  margin-right: 10px;
+  margin-right: 20px;
   margin-top: 10px;
 }
 
@@ -41,18 +42,16 @@
   flex: 1;
 }
 
-table {
+.table {
   border-collapse: collapse;
   width: 100%;
 }
 
 thead, p{
-  /* background-color: #6c7ae0; */
-  /* color: white; */
   color: rgb(82, 82, 82);
 }
 
-tr>td:first-child, th:first-of-type{
+.table tr>td:first-child, .table th:first-of-type{
   width: 42%;
 }
 
@@ -183,7 +182,8 @@ img{
   padding-right: 8px;
 }
 
-th span, td span{
+/* text in all table cells */
+th span, td span{ 
   margin-left: 3%;
 }
 
@@ -202,6 +202,7 @@ th span, td span{
   margin-left: 20px;
   margin-top: 20px;
   width: 50%;
+  border-collapse: separate;
 }
 
 .modalWin {
@@ -210,7 +211,7 @@ th span, td span{
   border: 1px solid #ccc;
   width: 600px;
   height: 200px;
-  margin: 25px;
+  margin: 25px 25px 25px 50px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -224,4 +225,8 @@ th span, td span{
 
 .tasksAmount:hover{
   font-weight: bold;
+}
+
+td:has(> span.tasksAmount) {
+  border: 1px solid rgb(138, 83, 255);
 }

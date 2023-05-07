@@ -111,14 +111,17 @@ const Calendar = () => {
                 <td key={cellIndex} className={(((date.getMonth()) == (todayDate.getMonth()) && 
                 (cell == todayDate.getDate())) ? 'todayCard fw-bold bg-light' : 'notToday')} >
                   <span>{cell}</span>
-                  <span className="tasksAmount" 
-                        onMouseEnter={() => {
-                          setShowModal(true)
-                          setmodalContent(tasksByDate[xDate.substring(0,8) + ("0" + cell).slice(-2)][1])
-                        }}
-                        onMouseLeave={() => {setShowModal(false)}}>      
-                        {tasksByDate.hasOwnProperty(xDate.substring(0,8) + ("0" + cell).slice(-2)) ? tasksByDate[xDate.substring(0,8) + ("0" + cell).slice(-2)][0] : null}
-                  </span>
+                  {tasksByDate.hasOwnProperty(xDate.substring(0,8) + ("0" + cell).slice(-2)) ?
+                    <span className="tasksAmount" 
+                          onMouseEnter={() => {
+                            setShowModal(true)
+                            setmodalContent(tasksByDate[xDate.substring(0,8) + ("0" + cell).slice(-2)][1])
+                          }}
+                          onMouseLeave={() => {setShowModal(false)}}>      
+                          {tasksByDate[xDate.substring(0,8) + ("0" + cell).slice(-2)][0]}
+                    </span>
+                  : null
+                  }
                 </td>
               ))}
             </tr>
