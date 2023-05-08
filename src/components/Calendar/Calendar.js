@@ -130,7 +130,7 @@ const Calendar = () => {
       </table>
       {showModal && (
         <div className='modalWin'>
-          {modalContent.map((task, index) => <p key={task.id+"s"}>{task.assignee} | {task.taskName} | {task.priority} | {task.status}</p>)}
+          {modalContent.map((task, index) => <p key={task.id+task.taskName}>{task.assignee} | {task.taskName} | {task.priority} | {task.status}</p>)}
         </div>
       )}
     </div>

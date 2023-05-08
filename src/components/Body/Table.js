@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, Fragment, useContext } from "react";
 import AuthContext from "../../context/AuthContext";
+import emailjs from '@emailjs/browser'
 
 const formTemplate = {
     taskName: "",
@@ -12,13 +13,39 @@ const formTemplate = {
     id: ""
 }
 
+const emaildata = {
+    service_id: 'service_wv2dldw',
+    template_id: 'template_xj9zoi9',
+    user_id: 'jRXuQMsXrIVi3ValX',
+    template_params: {
+        'subject': 'New Task Assigned',
+        'username': 'David',
+        'mailTo': 'capablanca09@gmail.com',
+        // 'g-recaptcha-response': '03AHJ_ASjnLA214KSNKFJAK12sfKASfehbmfd...'
+    }
+};
+
 export default function Table({ project, projects, tasks, removeTask, getData, taskState, settaskState, btnAddTask, setbtnAddTask, setbtnAddTaskDisabled }){
     const { currentUser } = useContext(AuthContext)
     const [displayProject, setdisplayProject] = useState("d-block")
 
+    const sendEmail = (e) => {
+        axios.post('https://api.emailjs.com/api/v1.0/email/send', emaildata, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then(function () {
+          alert('Your mail is sent!')
+        })
+        .catch(function (error) {
+          alert('Oops... ' + JSON.stringify(error))
+        })
+    }
+
     async function insertTaskData(event){
-        let keys = Object.keys(taskState)
-        let newTask = taskState
+        // let keys = Object.keys(taskState)
+        // let newTask = taskState
         //delete newTask[keys[keys.length - 1]]
         const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, taskState)
         settaskState(formTemplate)
@@ -36,6 +63,8 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
 
     function clickEdit(event, task){
         settaskState(task)
+        console.log('click edit');
+        sendEmail()
     }
 
     async function updateTask(taskState){
