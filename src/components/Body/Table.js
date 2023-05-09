@@ -13,33 +13,37 @@ const formTemplate = {
     id: ""
 }
 
-const emaildata = {
-    service_id: 'service_wv2dldw',
-    template_id: 'template_xj9zoi9',
-    user_id: 'jRXuQMsXrIVi3ValX',
-    template_params: {
-        'subject': 'New Task Assigned',
-        'username': 'David',
-        'mailTo': 'capablanca09@gmail.com',
-        // 'g-recaptcha-response': '03AHJ_ASjnLA214KSNKFJAK12sfKASfehbmfd...'
-    }
-};
-
 export default function Table({ project, projects, tasks, removeTask, getData, taskState, settaskState, btnAddTask, setbtnAddTask, setbtnAddTaskDisabled }){
     const { currentUser } = useContext(AuthContext)
     const [displayProject, setdisplayProject] = useState("d-block")
 
     const sendEmail = (e) => {
+
+        const emaildata = {
+            service_id: 'service_wv2dldw',
+            template_id: 'template_xj9zoi9',
+            user_id: 'jRXuQMsXrIVi3ValX',
+            template_params: {
+                'subject': 'New Task Assigned',
+                'username': taskState.assignee,
+                'taskName': taskState.taskName,
+                'priority': taskState.priority,
+                'dueDate': taskState.duedate,
+                'mailTo': 'capablanca09@gmail.com',
+                // 'g-recaptcha-response': '03AHJ_ASjnLA214KSNKFJAK12sfKASfehbmfd...'
+            }
+        };
+        
         axios.post('https://api.emailjs.com/api/v1.0/email/send', emaildata, {
           headers: {
             'Content-Type': 'application/json',
           },
         })
         .then(function () {
-          alert('Your mail is sent!')
+          console.log('Your mail is sent!')
         })
         .catch(function (error) {
-          alert('Oops... ' + JSON.stringify(error))
+          console.log('Oops... ' + JSON.stringify(error))
         })
     }
 
@@ -48,6 +52,7 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
         // let newTask = taskState
         //delete newTask[keys[keys.length - 1]]
         const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, taskState)
+        sendEmail()
         settaskState(formTemplate)
         getData()
     }
@@ -63,8 +68,7 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
 
     function clickEdit(event, task){
         settaskState(task)
-        console.log('click edit');
-        sendEmail()
+        //sendEmail()
     }
 
     async function updateTask(taskState){
@@ -149,17 +153,18 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
                                     </select>
                                 </td>
                                 <td>
-                                    <button type="button" onClick={
+                                    <button type="button" onClick={     //confirm adding or deleting task
                                             taskState.id ? () => {updateTask(taskState); setbtnAddTaskDisabled(false)}          //update task confirm
-                                            : () => {insertTaskData(); setbtnAddTask(true); setbtnAddTaskDisabled(false)}     //insert new task confirm
+                                            : () => {insertTaskData(); setbtnAddTask(true); setbtnAddTaskDisabled(false)}      //insert new task confirm
                                         } className="btn btn-light btn-sm"><span><i className="fa-solid fa-check"></i></span></button>
 
                                     {btnAddTask == true ?
-                                    <><button type="button" onClick={
-                                            task.id == undefined ? () => {removeTask(task.id); settaskState(formTemplate); setbtnAddTaskDisabled(false)}
-                                            : () => {settaskState(formTemplate); setbtnAddTaskDisabled(false)}
-                                        } className="mx-2 btn btn-light btn-sm"><span><i className="fa-solid fa-ban"></i></span></button>
-                                    <button type="button" onClick={() => {removeTask(task.id); setbtnAddTaskDisabled(false)}} className="btn btn-sm btn-light"><span><i className="fa-solid fa-trash"></i></span></button>
+                                    <>
+                                        <button type="button" onClick={
+                                                task.id == undefined ? () => {removeTask(task.id); settaskState(formTemplate); setbtnAddTaskDisabled(false)}
+                                                : () => {settaskState(formTemplate); setbtnAddTaskDisabled(false)}
+                                            } className="mx-2 btn btn-light btn-sm"><span><i className="fa-solid fa-ban"></i></span></button>
+                                        <button type="button" onClick={() => {removeTask(task.id); setbtnAddTaskDisabled(false)}} className="btn btn-sm btn-light"><span><i className="fa-solid fa-trash"></i></span></button>
                                     </>
                                     : null
                                     }

@@ -23,8 +23,8 @@ export default function Body(){
     const [tasks, setTasks] = useState([])
     const [taskState, settaskState] = useState(formTemplate)
     const [loading, setLoading] = useState(true)
-    const [btnAddTask, setbtnAddTask] = useState(true)
-    const [btnAddTaskDisabled, setbtnAddTaskDisabled] = useState(false)
+    const [btnAddTask, setbtnAddTask] = useState(true)                   //when item is created
+    const [btnAddTaskDisabled, setbtnAddTaskDisabled] = useState(false) //when some item is edited
     const { isAuthenticated, currentUser } = useContext(AuthContext)
 
     const navigate = useNavigate();
