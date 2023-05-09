@@ -15,14 +15,14 @@ import Settings from './components/Settings/Settings'
 
 function App() {
   const { setAuth, setUser } = useContext(AuthContext)
-  const [isAuth, setisAuth] = useState(false)
+  //const [isAuth, setisAuth] = useState(false)
 
   const checkUser = async () => {
     const tokenData = window.localStorage.getItem('token-data')
     if(tokenData){
       await setAuth(true)
       await setUser(JSON.parse(tokenData))
-      setisAuth(true)
+      //setisAuth(true)
     }
   }
 

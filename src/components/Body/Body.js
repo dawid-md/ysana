@@ -33,6 +33,10 @@ export default function Body(){
         const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`)
         const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`)
 
+        //const allUsers = await axios.get(`https://identitytoolkit.googleapis.com/v1/accounts.json?auth=${currentUser.token}`, )
+
+        // console.log(allUsers);
+
         const projectsData = []
         for(const key in resProjects.data){
             projectsData.push({...resProjects.data[key], id: key})

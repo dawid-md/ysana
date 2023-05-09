@@ -1,10 +1,15 @@
 import axios from "axios"
 import { useState, useContext } from "react"
 import AuthContext from "../../context/AuthContext"
+import { useNavigate } from "react-router-dom"
 
 export default function Register(){
     const { isAuthenticated, setAuth } = useContext(AuthContext)
     const [userCredentials, setuserCredentials] = useState({
+        name: {
+            value: "",
+            rules: ""
+        },
         email: {
             value: "",
             rules: ['required']
@@ -14,6 +19,8 @@ export default function Register(){
             rules: ['required']
         }
     })
+
+    const navigate = useNavigate()
 
     const changeCredentials = (event) => {
         event.preventDefault()
@@ -34,15 +41,17 @@ export default function Register(){
             const res = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
                 {email: userCredentials.email,
                 password: userCredentials.password,
+                displayName: userCredentials.name,
                 returnSecureToken: true
             })
-            setAuth(true, {
-                email: res.data.email,
-                token: res.data.idToken,
-                refreshToken: res.data.refreshToken,
-                userID: res.data.localId,
-                //displayName: res.data.displayName
-            })
+            // setAuth(true, {
+            //     email: res.data.email,
+            //     token: res.data.idToken,
+            //     refreshToken: res.data.refreshToken,
+            //     userID: res.data.localId,
+            //     displayName: res.data.displayName
+            // })
+            navigate("/login")
         } catch (ex) {
             console.log(ex.response);
         }
@@ -52,6 +61,10 @@ export default function Register(){
         <div>
             <h2 className="text-center">Register</h2>
             <form>
+            <div className="mb-3 col-3 mx-auto">
+                <label className="form-label">Name</label>
+                <input onChange={changeCredentials} name="name" type="text" className="form-control" />
+            </div>
             <div className="mb-3 col-3 mx-auto">
                 <label className="form-label">Email address</label>
                 <input onChange={changeCredentials} name="email" type="email" className="form-control" />

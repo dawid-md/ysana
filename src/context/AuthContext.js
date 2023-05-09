@@ -49,7 +49,7 @@ export function AuthProvider({ children }){
             window.localStorage.setItem('user-name', JSON.stringify(userData.displayName))
         }
         else{
-            console.log('refresh token attempt failes');
+            console.log('refresh token attempt failed');
             setisAuthenticated(false)
         }
         return true

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import AuthContext from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 
@@ -56,6 +56,10 @@ export default function Login(){
             console.log('sign in error ' + ex.response);
         }
     }
+
+    useEffect(() => {
+        setAuth(false)
+    },)
 
     return(
         <div>
