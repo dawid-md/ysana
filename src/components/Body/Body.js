@@ -3,7 +3,6 @@ import { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Table from "./Table";
-//import ReactDatePicker from "react-datepicker";         //datepicker
 import "react-datepicker/dist/react-datepicker.css";    //datepicker
 import Searchbar from "../Searchbar/Searchbar";
 
@@ -104,8 +103,8 @@ export default function Body(){
             <div className="filterPanel">
                 {btnAddTask ? <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className={`addTaskbtn btn btn-light btn-sm ${btnAddTaskDisabled ? "disabled" : ""}`}><i className="fa-solid fa-plus"></i> Add Task</button> 
                             : <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className={`addTaskbtn btn btn-light border-danger btn-sm ${btnAddTaskDisabled ? "disabled" : ""}`}><i className="fa-solid fa-minus"></i> Cancel</button> }
-                {/* <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button> */}
-                {/* <button className="addTaskbtnX btn btn-light btn-sm">Sort</button> */}
+                <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button>
+                <button className="addTaskbtnX btn btn-light btn-sm">Sort</button>
                 <Searchbar onSearch={searchHandler}/>
             </div>
 
