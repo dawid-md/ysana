@@ -112,9 +112,9 @@ img{
 /* projects component */
 .centeredItem{    
   width: 25%;
-  border: 1px solid rgb(223, 223, 223);
-  border-radius: 10px;
-  margin: 20px auto auto auto;
+  /* border: 1px solid rgb(223, 223, 223);
+  border-radius: 10px; */
+  /* margin: 20px auto auto auto; */
   padding-bottom: 5px;
 }
 
@@ -229,4 +229,9 @@ th span, td span{
 
 td:has(> span.tasksAmount) {
   border: 1px solid rgb(138, 83, 255);
+}
+
+.removeProject{
+  margin-left: 5px;
+  margin-top: 3px;
 }
