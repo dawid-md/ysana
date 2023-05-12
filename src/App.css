@@ -121,7 +121,8 @@ img{
 .projectHolder{
   border: 1px solid rgb(223, 223, 223);
   border-radius: 5px;
-  padding-left: 5px;
+  margin: 5px;
+  padding: 10px;
   height: 40px;
 }
 
@@ -233,5 +234,5 @@ td:has(> span.tasksAmount) {
 
 .removeProject{
   margin-left: 5px;
-  margin-top: 3px;
+
 }
