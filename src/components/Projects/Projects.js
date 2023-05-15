@@ -53,8 +53,9 @@ export default function Projects(){
         <h2 className="mx-2">All Projects</h2> 
         <div className="centeredItem"> 
             {projects.map(project => 
-                <div key={project.id}>
-                    <div className="d-flex projectHolder justify-content-between align-items-center">{project.projectName}<button className="btn btn-danger btn-sm removeProject" onClick={() => removeProject(project.id)}>X</button></div>
+                <div key={project.id} className="d-flex align-items-center justify-content-center w-100">
+                    <div className="projectHolder w-75">{project.projectName}</div>
+                    <button className="btn btn-danger btn-sm removeProject" onClick={() => removeProject(project.id)}>Remove</button>
                 </div>)}
             <input type="text" onChange={handleInputChange} className="form-control addProjectInput mx-auto my-3"/>
             <button className="btn btn-primary my-3 w-75 buttonAddProject" onClick={insertProjectData}>Add Project</button>
