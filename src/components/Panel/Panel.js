@@ -28,6 +28,11 @@ export default function Panel(){
                     <span><i className="fa-solid fa-list-check"></i> My Tasks</span>
                 </div>
             </Link>
+            <Link to={"/myteam"}>
+                <div className="panelDiv">
+                    <span><i className="fa-solid fa-list-check"></i> My Team</span>
+                </div>
+            </Link>
             <Link to={"/calendar"}>
                 <div className="panelDiv">
                     <span><i className="fa-solid fa-calendar-days"></i> Calendar</span>

@@ -1,1 +1,3 @@
-console.log("team");
+export default function MyTeam() {
+    return <div>My Team</div>  
+}

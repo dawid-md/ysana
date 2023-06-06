@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, Fragment, useContext } from "react";
+import { useState, Fragment, useContext, useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
 import emailjs from '@emailjs/browser'
 
@@ -17,8 +17,12 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
     const { currentUser } = useContext(AuthContext)
     const [displayProject, setdisplayProject] = useState("d-block")
 
-    const sendEmail = (e) => {
+    // useEffect(() => {
+    //     if(btnAddTask == false){setdisplayProject("d-block")}
+    //     console.log('mounted');
+    // })
 
+    const sendEmail = (e) => {
         const emaildata = {
             service_id: 'service_wv2dldw',
             template_id: 'template_xj9zoi9',
