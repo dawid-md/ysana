@@ -1,28 +1,33 @@
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../App"
-import axios from "axios"
+import { updateProfile } from "firebase/auth"
+import { auth } from "../../config/firebase"
 
 export default function Settings(){
-    const [userName, setuserName] = useState('')
-    const { user } = useContext(AuthContext)
+    const [userName, setUserName] = useState('')
+    const { user, updateUserName } = useContext(AuthContext)
 
     useEffect(() => {
-        setuserName(user.displayName)
-    }, [])
+        setUserName(user.displayName || '')
+    }, [user.displayName])
 
     const changeData = (event) => {
         event.preventDefault()
         const newUserName = event.target.value
-        setuserName(newUserName)
+        setUserName(newUserName)
     }
 
     const submit = async (event) => {
         event.preventDefault()
-        console.log('knur knur knur xD');
-
-        const res = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
-            {idToken: user.accessToken,
-            displayName: userName})
+        try{
+            await updateProfile(auth.currentUser, {
+                displayName: userName
+            })
+            console.log('profile updated');
+            updateUserName({...auth.currentUser, displayName: userName})
+        } catch (error) {
+            console.log('error updating profile ', error);
+        }
     }
 
     return(

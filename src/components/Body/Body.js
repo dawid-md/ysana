@@ -58,10 +58,11 @@ export default function Body(){
     }
 
     useEffect(() => {
-        user && getData()
-        // else if(user == false){
-        //     navigate("/login")
-        // }
+        if(user){
+            getData()
+        } else{
+            navigate("/login")
+        }
     })
 
     function addNewTaskForm(){          //show and hide new task form

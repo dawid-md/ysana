@@ -3,6 +3,7 @@ import axios from "axios"
 import Table from "../Body/Table"
 import { AuthContext } from "../../App";
 import Searchbar from "../Searchbar/Searchbar";
+import { useNavigate } from "react-router-dom";
 
 const formTemplate = {
     taskName: ",,,",
@@ -23,6 +24,7 @@ export default function MyTasks(){
     const [loading, setLoading] = useState(true)
     const [btnAddTask, setbtnAddTask] = useState(true)
     const [btnAddTaskDisabled, setbtnAddTaskDisabled] = useState(false)
+    const navigate = useNavigate()
 
     async function getData(){
         const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${user.accessToken}`)
@@ -49,8 +51,11 @@ export default function MyTasks(){
     }
 
     useEffect(() => {
-        // if(user.displayName === ''){user.displayName = JSON.parse(window.localStorage.getItem('user-name'))}
-        user && getData()
+        if(user){
+            getData()
+        } else{
+            navigate("/login")
+        }
     }, [user])
 
     function addNewTaskForm(){          //show and hide new task form

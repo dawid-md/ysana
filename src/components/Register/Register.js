@@ -1,4 +1,3 @@
-import axios from "axios"
 import { useState, useContext } from "react"
 import { AuthContext } from "../../App"
 import { auth } from "../../config/firebase"
@@ -19,7 +18,7 @@ export default function Register(){
         password: {
             value: "",
             rules: ['required']
-        }
+        } 
     })
 
     const navigate = useNavigate()

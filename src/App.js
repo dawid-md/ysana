@@ -6,8 +6,6 @@ import Panel from './components/Panel/Panel'
 import './App.css'
 import { useEffect, createContext, useContext, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-// import AuthContext from './context/AuthContext'
-// import { AuthProvider } from './context/AuthContext'
 import MyTasks from './components/MyTasks/MyTasks'
 import Projects from './components/Projects/Projects'
 import Calendar from './components/Calendar/Calendar'
@@ -16,24 +14,32 @@ import Settings from './components/Settings/Settings'
 import MyTeam from './components/MyTeam/MyTeam'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
-export const AuthContext = createContext()
+export const AuthContext = createContext({
+  user: null,
+  setUser: () => {},
+  updateUserName: () => {}
+})
 
 function App() {
   const [user, setUser] = useState(null);
   const auth = getAuth();
+
+  const updateUserName = (updatedUserName) =>{  //it doesn't change the name in the firebase, it is just callback from settings.js component which does that
+    setUser(updatedUserName)
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       // setLoading(false);
     });
-
+    console.log(user);
     return () => unsubscribe();  //cleanup on unmount
-  }, []);
+  });
 
   return (
     <div className="App d-flex">
-      <AuthContext.Provider value={{ user, setUser }}>
+      <AuthContext.Provider value={{ user, setUser, updateUserName }}>
         <BrowserRouter>
             <Panel />
             <div className="page-content">
