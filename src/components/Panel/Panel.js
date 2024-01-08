@@ -1,10 +1,23 @@
 import { Link } from "react-router-dom"
 import { useContext } from "react"
-import AuthContext from "../../context/AuthContext"
+// import AuthContext from "../../context/AuthContext"
+import { signOut } from "firebase/auth"
+import { auth } from "../../config/firebase"
+import { AuthContext } from "../../App"
 import ylogo from "../../ylogo.svg"
 
 export default function Panel(){
-    const { isAuthenticated, setAuth } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            console.log("User signed out");
+            // navigate('/login'); 
+        } catch (error) {
+            console.error("Error signing out: ", error);
+        }
+    };
 
     return(
         <div className="left-panel">
@@ -48,7 +61,7 @@ export default function Panel(){
                     <span><i className="fa-solid fa-diagram-project"></i> Projects</span>
                 </div>
             </Link>
-            {!isAuthenticated ? 
+            {!user ? 
             <>
                 <Link to={"/login"}>
                 <div className="panelDiv">
@@ -63,7 +76,7 @@ export default function Panel(){
             </>
              : <Link to={"/login"}>
                 <div className="panelDiv">
-                    <span onClick={() => setAuth(false)}><i className="fa-solid fa-arrow-right-from-bracket"></i> Sign out</span>
+                    <span onClick={handleLogout}><i className="fa-solid fa-arrow-right-from-bracket"></i> Sign out</span>
                 </div>
                </Link>
             }

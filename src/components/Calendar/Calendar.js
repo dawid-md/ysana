@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import AuthContext from "../../context/AuthContext";
+import { AuthContext } from '../../App';
 import axios from 'axios';
 
 const Calendar = () => {
@@ -9,12 +9,12 @@ const Calendar = () => {
   const [tasksByDate, settasksByDate] = useState({})
   //const [tasksByDate, settasksByDate] = useState([])
   const [loading, setLoading] = useState(true)
-  const { isAuthenticated, currentUser } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
   const [showModal, setShowModal] = useState(false)
   const [modalContent, setmodalContent] = useState([])
 
   async function getData(){
-    const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`)
+    const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${user.accessToken}`)
     const tasksData = []
     //const tasksByDateCounter = []
     const tasksByDateCounter = {}
@@ -33,14 +33,14 @@ const Calendar = () => {
   }
 
   useEffect(() => {
-    if(isAuthenticated && currentUser.token) {
+    if(user && user.accessToken) {
         getData()
     }
-    else if(isAuthenticated === false){
+    else if(user == false){
         //navigate("/login")
     }
     
-}, [isAuthenticated, currentUser])
+})
 
   const getCurrentDateFormatted = () => {
     const d = new Date(date);

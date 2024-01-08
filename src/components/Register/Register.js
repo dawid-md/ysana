@@ -1,10 +1,12 @@
 import axios from "axios"
 import { useState, useContext } from "react"
-import AuthContext from "../../context/AuthContext"
+import { AuthContext } from "../../App"
+import { auth } from "../../config/firebase"
 import { useNavigate } from "react-router-dom"
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 
 export default function Register(){
-    const { isAuthenticated, setAuth } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     const [userCredentials, setuserCredentials] = useState({
         name: {
             value: "",
@@ -37,24 +39,30 @@ export default function Register(){
     const submit = async (e) =>{
         e.preventDefault()
 
-        try{
-            const res = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
-                {email: userCredentials.email,
-                password: userCredentials.password,
-                displayName: userCredentials.name,
-                returnSecureToken: true
-            })
-            // setAuth(true, {
-            //     email: res.data.email,
-            //     token: res.data.idToken,
-            //     refreshToken: res.data.refreshToken,
-            //     userID: res.data.localId,
-            //     displayName: res.data.displayName
-            // })
-            navigate("/login")
-        } catch (ex) {
-            console.log(ex.response);
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, userCredentials.email, userCredentials.password);
+            await updateProfile(userCredential.user, {
+                displayName: userCredentials.name
+            });
+            console.log("User signed up and name set in profile");
+            navigate('/')
+        } catch (error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode);
+            console.log(errorMessage);
         }
+        // try{
+        //     const res = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
+        //         {email: userCredentials.email,
+        //         password: userCredentials.password,
+        //         displayName: userCredentials.name,
+        //         returnSecureToken: true
+        //     })
+        //     navigate("/login")
+        // } catch (ex) {
+        //     console.log(ex.response);
+        // }
     }
 
     return(

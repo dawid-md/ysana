@@ -1,15 +1,12 @@
 import { useContext } from "react"
-import AuthContext from "../../context/AuthContext"
-import axios from "axios"
+import { AuthContext } from "../../App"
 
 export default function Header(){
-    const { isAuthenticated, setAuth, currentUser } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
 
     return(
-        <>
-            <div className="header d-flex">
-                <h3 className="userNameLabel">{isAuthenticated ? currentUser.displayName : null}</h3>
-            </div>
-        </>
+        <div className="header d-flex">
+            <h3 className="userNameLabel">{user ? user.displayName : null}</h3>
+        </div>
     )
 }

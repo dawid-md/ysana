@@ -1,11 +1,13 @@
 import axios from "axios"
 import { useState, useContext, useEffect } from "react"
-import AuthContext from "../../context/AuthContext"
+import { AuthContext } from "../../App"
+import { auth } from "../../config/firebase"
+import { signInWithEmailAndPassword } from "firebase/auth"
 import { useNavigate } from "react-router-dom"
 
 export default function Login(){
     const navigate = useNavigate()
-    const { isAuthenticated, setAuth, setUser } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     const [userCredentials, setuserCredentials] = useState({
         email: {
             value: "",
@@ -32,33 +34,43 @@ export default function Login(){
     const submit = async (e) =>{
         e.preventDefault()
 
-        try{
-            const res = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
-                {email: userCredentials.email,
-                password: userCredentials.password,
-                returnSecureToken: true
-            })
-            console.log('zalogowano: res.data', res.data);
-            setAuth(true, {
-                email: res.data.email,
-                token: res.data.idToken,
-                refreshToken: res.data.refreshToken,
-                userID: res.data.localId,
-            })
-            setUser({
-                email: res.data.email,
-                token: res.data.idToken,
-                refreshToken: res.data.refreshToken,
-                userID: res.data.localId,
-            })
-            navigate('/')
-        } catch (ex) {
-            console.log('sign in error ' + ex.response);
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, userCredentials.email, userCredentials.password);
+            console.log("User logged in", userCredential);
+            navigate('/'); //Redirect to home
+        } catch (error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log("Login error", errorCode, errorMessage);
         }
+
+        // try{
+        //     const res = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
+        //         {email: userCredentials.email,
+        //         password: userCredentials.password,
+        //         returnSecureToken: true
+        //     })
+        //     console.log('zalogowano: res.data', res.data);
+        //     setAuth(true, {
+        //         email: res.data.email,
+        //         token: res.data.idToken,
+        //         refreshToken: res.data.refreshToken,
+        //         userID: res.data.localId,
+        //     })
+        //     setUser({
+        //         email: res.data.email,
+        //         token: res.data.idToken,
+        //         refreshToken: res.data.refreshToken,
+        //         userID: res.data.localId,
+        //     })
+        //     navigate('/')
+        // } catch (ex) {
+        //     console.log('sign in error ' + ex.response);
+        // }
     }
 
     useEffect(() => {
-        setAuth(false)
+        // setAuth(false)
     },)
 
     return(

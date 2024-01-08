@@ -1,10 +1,11 @@
 import axios from "axios"
 import { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../context/AuthContext";
+import { AuthContext } from "../../App";
 import Table from "./Table";
 import "react-datepicker/dist/react-datepicker.css";    //datepicker
 import Searchbar from "../Searchbar/Searchbar";
+import { getDatabase, ref, get, push, remove, update, query, orderByChild, equalTo } from 'firebase/database'
 
 const formTemplate = {
     taskName: "...",
@@ -24,13 +25,13 @@ export default function Body(){
     const [loading, setLoading] = useState(true)
     const [btnAddTask, setbtnAddTask] = useState(true)                   //when item is created
     const [btnAddTaskDisabled, setbtnAddTaskDisabled] = useState(false) //when some item is edited
-    const { isAuthenticated, currentUser } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
 
     const navigate = useNavigate();
 
     async function getData(){
-        const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`)
-        const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`)
+        const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${user.accessToken}`)
+        const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${user.accessToken}`)
 
         //const allUsers = await axios.get(`https://identitytoolkit.googleapis.com/v1/accounts.json?auth=${currentUser.token}`, )
 
@@ -52,18 +53,16 @@ export default function Body(){
     }
 
     async function removeTask(taskID){
-        const res = await axios.delete(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskID}.json?auth=${currentUser.token}`)
+        const res = await axios.delete(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskID}.json?auth=${user.accessToken}`)
         getData()
     }
 
     useEffect(() => {
-        if(isAuthenticated && currentUser.token) {
-            getData()
-        }
-        else if(isAuthenticated === false){
-            navigate("/login")
-        }
-    }, [isAuthenticated, currentUser])
+        user && getData()
+        // else if(user == false){
+        //     navigate("/login")
+        // }
+    })
 
     function addNewTaskForm(){          //show and hide new task form
         if(btnAddTask === true){

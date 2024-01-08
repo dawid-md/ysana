@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+/*import { createContext, useState } from "react";
 import axios from "axios";
 
 const AuthContext = createContext({})
@@ -32,7 +32,6 @@ export function AuthProvider({ children }){
     }
 
     const setUser = async (tokenData = null) => {
-        //let userData = JSON.parse(tokenData)
         let userData = tokenData
         let userNameResponse = await getUserName(userData.token, userData.refreshToken, false)  //, ""
         if(userNameResponse[0] == 200){
@@ -89,4 +88,4 @@ export function AuthProvider({ children }){
     )
 }
 
-export default AuthContext
+export default AuthContext*/

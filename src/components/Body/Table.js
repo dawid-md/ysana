@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, Fragment, useContext, useEffect } from "react";
-import AuthContext from "../../context/AuthContext";
+import { AuthContext } from "../../App";
 import emailjs from '@emailjs/browser'
 
 const formTemplate = {
@@ -14,7 +14,7 @@ const formTemplate = {
 }
 
 export default function Table({ project, projects, tasks, removeTask, getData, taskState, settaskState, btnAddTask, setbtnAddTask, setbtnAddTaskDisabled }){
-    const { currentUser } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     const [displayProject, setdisplayProject] = useState("d-block")
 
     // useEffect(() => {
@@ -55,7 +55,7 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
         // let keys = Object.keys(taskState)
         // let newTask = taskState
         //delete newTask[keys[keys.length - 1]]
-        const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`, taskState)
+        const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${user.accessToken}`, taskState)
         sendEmail()
         settaskState(formTemplate)
         getData()
@@ -76,7 +76,7 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
     }
 
     async function updateTask(taskState){
-        const res = await axios.patch(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskState.id}.json?auth=${currentUser.token}`, taskState)
+        const res = await axios.patch(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskState.id}.json?auth=${user.accessToken}`, taskState)
         settaskState(formTemplate)
         getData()
     }
@@ -103,7 +103,6 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
                     tasks.map(task => 
                         <Fragment key={task.id}> 
                             {(taskState.id === task.id || task.id == "new") ? 
-                            <>
                                 <tr>
                                 <td>
                                     <input className="editableCell" type="text" required="required" value={taskState.taskName} name="taskName" onChange={handleEditTaskForm} />
@@ -174,9 +173,7 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
                                     }
                                 </td>
                                 </tr>
-                            </>
                             :
-                            <>
                                 <tr>
                                     <td><img src="checkmark.png" width="20" height="20"></img>{task.taskName}</td>
                                     <td><span>{task.assignee}</span></td>
@@ -186,10 +183,7 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
                                     <td><span>{task.project}</span></td>
                                     <td><button type="button" onClick={(event) => {clickEdit(event, task); setbtnAddTaskDisabled(true);}} className={`btn btn-light btn-sm ${btnAddTask ? "" : " disabled"}`}><span><i className="fa-solid fa-pen-to-square"></i></span></button></td>
                                 </tr>
-                            </>
-
                             }
-
                         </Fragment>
                     )
                     }

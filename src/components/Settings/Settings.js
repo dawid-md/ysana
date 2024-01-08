@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react"
-import AuthContext from "../../context/AuthContext"
+import { AuthContext } from "../../App"
 import axios from "axios"
 
 export default function Settings(){
     const [userName, setuserName] = useState('')
-    const { currentUser } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
 
     useEffect(() => {
-        setuserName(currentUser.displayName)
+        setuserName(user.displayName)
     }, [])
 
     const changeData = (event) => {
@@ -21,7 +21,7 @@ export default function Settings(){
         console.log('knur knur knur xD');
 
         const res = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBhHB41dFDMCuhXmPGyLXgP308GIEj2sWc",
-            {idToken: currentUser.token,
+            {idToken: user.accessToken,
             displayName: userName})
     }
 

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react"
 import axios from "axios"
 import Table from "../Body/Table"
-import AuthContext from "../../context/AuthContext"
+import { AuthContext } from "../../App";
 import Searchbar from "../Searchbar/Searchbar";
 
 const formTemplate = {
@@ -16,7 +16,7 @@ const formTemplate = {
 let downloadedTasks;
 
 export default function MyTasks(){
-    const { isAuthenticated, currentUser } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     const [projects, setProjects] = useState([])
     const [tasks, setTasks] = useState([])
     const [taskState, settaskState] = useState(formTemplate)
@@ -25,8 +25,8 @@ export default function MyTasks(){
     const [btnAddTaskDisabled, setbtnAddTaskDisabled] = useState(false)
 
     async function getData(){
-        const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${currentUser.token}`)
-        const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${currentUser.token}`)
+        const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${user.accessToken}`)
+        const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${user.accessToken}`)
 
         const projectsData = []
         for(const key in resProjects.data){
@@ -36,7 +36,7 @@ export default function MyTasks(){
 
         const tasksData = []
         for(const key in resTasks.data){
-            resTasks.data[key].assignee === currentUser.displayName && tasksData.push({...resTasks.data[key], id: key})
+            resTasks.data[key].assignee === user.displayName && tasksData.push({...resTasks.data[key], id: key})
         }
         downloadedTasks = tasksData
         setTasks(tasksData)
@@ -44,16 +44,14 @@ export default function MyTasks(){
     }
 
     async function removeTask(taskID){
-        const res = await axios.delete(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskID}.json?auth=${currentUser.token}`)
+        const res = await axios.delete(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskID}.json?auth=${user.accessToken}`)
         getData()
     }
 
     useEffect(() => {
-        if(currentUser.displayName === ''){currentUser.displayName = JSON.parse(window.localStorage.getItem('user-name'))}
-        if(isAuthenticated && currentUser.token) {
-            getData()
-        }
-    }, [isAuthenticated, currentUser.token])
+        // if(user.displayName === ''){user.displayName = JSON.parse(window.localStorage.getItem('user-name'))}
+        user && getData()
+    }, [user])
 
     function addNewTaskForm(){          //show and hide new task form
         if(btnAddTask === true){
