@@ -38,7 +38,7 @@ function App() {
   });
 
   return (
-    <div className="App d-flex">
+    <div className="App">
       <AuthContext.Provider value={{ user, setUser, updateUserName }}>
         <BrowserRouter>
             <Panel />

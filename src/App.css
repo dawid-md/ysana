@@ -1,5 +1,7 @@
 .App {
   height: 100vh;
+  display: grid;
+  grid-template-rows: 55px 1fr;
 }
 
 .main-div{
@@ -39,7 +41,7 @@
 }
 
 .page-content {
-  flex: 1;
+  /* flex: 1; */
 }
 
 .table {
