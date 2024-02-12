@@ -8,7 +8,7 @@ import Searchbar from "../Searchbar/Searchbar";
 import { getDatabase, ref, get, push, remove, update, query, orderByChild, equalTo } from 'firebase/database'
 
 const formTemplate = {
-    taskName: "...",
+    taskName: "",
     assignee: "",
     duedate: "",
     priority: "",
@@ -33,14 +33,11 @@ export default function Body(){
         const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${user.accessToken}`)
         const resTasks = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${user.accessToken}`)
 
-        //const allUsers = await axios.get(`https://identitytoolkit.googleapis.com/v1/accounts.json?auth=${currentUser.token}`, )
-
-        // console.log(allUsers);
-
         const projectsData = []
         for(const key in resProjects.data){
             projectsData.push({...resProjects.data[key], id: key})
         }
+        console.log(projectsData);
         setProjects(projectsData.sort((a,b) => (a.projectName > b.projectName) ? 1 : ((b.projectName > a.projectName) ? -1 : 0)))
 
         const tasksData = []
@@ -58,12 +55,23 @@ export default function Body(){
     }
 
     useEffect(() => {
-        if(user){
-            getData()
-        } else{
-            navigate("/login")
+        const checkUserAndGetData = async () => {
+            if (user) {
+                try{
+                    await(getData())
+                } catch (error) {
+                    console.log('fetch data failed, ', error)
+                } finally{
+                    setLoading(false)
+                }
+            } else {
+                if (loading === false) {
+                    navigate("/login")
+                }
+            }
         }
-    })
+        checkUserAndGetData()
+    }, [user])
 
     function addNewTaskForm(){          //show and hide new task form
         if(btnAddTask === true){

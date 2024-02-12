@@ -4,7 +4,7 @@ import Register from './components/Register/Register'
 import Login from './components/Login/Login'
 import Panel from './components/Panel/Panel'
 import './App.css'
-import { useEffect, createContext, useContext, useState } from 'react'
+import { useEffect, createContext, useState, useMemo } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import MyTasks from './components/MyTasks/MyTasks'
 import Projects from './components/Projects/Projects'
@@ -16,30 +16,28 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 export const AuthContext = createContext({
   user: null,
-  setUser: () => {},
-  updateUserName: () => {}
+  setUser: () => {}
 })
 
 function App() {
   const [user, setUser] = useState(null);
   const auth = getAuth();
 
-  const updateUserName = (updatedUserName) =>{  //it doesn't change the name in the firebase, it is just callback from settings.js component which does that
-    setUser(updatedUserName)
-  }
+  // const updateUserName = (updatedUserName) =>{  //it doesn't change the name in the firebase, it is just callback from settings.js component which does that
+  //   setUser(updatedUserName)
+  // }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      // setLoading(false);
-    });
-    console.log(user);
+      setUser(currentUser)
+    })
     return () => unsubscribe();  //cleanup on unmount
   });
 
+  const authValue = useMemo(() => ({user, setUser}), [user])
   return (
     <div className="App">
-      <AuthContext.Provider value={{ user, setUser, updateUserName }}>
+      <AuthContext.Provider value={ authValue }>
         <BrowserRouter>
             <Panel />
             <div className="page-content">
@@ -53,7 +51,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/calendar" element={<Calendar />} />
-                <Route path="/settings" element={<Settings />} />
+                {/* <Route path="/settings" element={<Settings />} /> */}
               </Routes>
             </div>
         </BrowserRouter>
