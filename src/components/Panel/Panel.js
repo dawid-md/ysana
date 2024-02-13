@@ -45,11 +45,11 @@ export default function Panel(){
                         <span><i className="fa-solid fa-calendar-days"></i> Calendar</span>
                     </div>
                 </Link>
-                <Link to={"/settings"}>
+                {/* <Link to={"/settings"}>
                     <div className="panel-link">
                         <span><i className="fa-solid fa-gears"></i> Settings</span>
                     </div>
-                </Link>
+                </Link> */}
                 <Link to={"/projects"}>
                     <div className="panel-link">
                         <span><i className="fa-solid fa-diagram-project"></i> Projects</span>

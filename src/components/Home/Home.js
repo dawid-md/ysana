@@ -1,6 +1,5 @@
 import axios from "axios"
-import { useState, useEffect, useContext, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../App";
 import Table from "./Table";
 import "react-datepicker/dist/react-datepicker.css";    //datepicker
@@ -18,16 +17,14 @@ const formTemplate = {
 
 let downloadedTasks;
 
-export default function Body(){
+export default function Home(){
     const [projects, setProjects] = useState([])
     const [tasks, setTasks] = useState([])
     const [taskState, settaskState] = useState(formTemplate)
     const [loading, setLoading] = useState(true)
-    const [btnAddTask, setbtnAddTask] = useState(true)                   //when item is created
-    const [btnAddTaskDisabled, setbtnAddTaskDisabled] = useState(false) //when some item is edited
+    const [btnAddTask, setbtnAddTask] = useState(true)                       //disabled when item is created
+    const [btnAddTaskDisabled, setbtnAddTaskDisabled] = useState(false)     //disabled when some item is edited
     const { user } = useContext(AuthContext)
-
-    const navigate = useNavigate();
 
     async function getData(){
         const resProjects = await axios.get(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/projects.json?auth=${user.accessToken}`)
@@ -37,7 +34,6 @@ export default function Body(){
         for(const key in resProjects.data){
             projectsData.push({...resProjects.data[key], id: key})
         }
-        console.log(projectsData);
         setProjects(projectsData.sort((a,b) => (a.projectName > b.projectName) ? 1 : ((b.projectName > a.projectName) ? -1 : 0)))
 
         const tasksData = []
@@ -55,27 +51,12 @@ export default function Body(){
     }
 
     useEffect(() => {
-        const checkUserAndGetData = async () => {
-            if (user) {
-                try{
-                    await(getData())
-                } catch (error) {
-                    console.log('fetch data failed, ', error)
-                } finally{
-                    setLoading(false)
-                }
-            } else {
-                if (loading === false) {
-                    navigate("/login")
-                }
-            }
-        }
-        checkUserAndGetData()
-    }, [user])
+        user && getData()
+    }, [])
 
     function addNewTaskForm(){          //show and hide new task form
         if(btnAddTask === true){
-            let newtasks = [...tasks]
+            let newtasks = [...tasks]  
             setTasks(newtasks)
             newtasks.unshift({
                 taskName: "",
@@ -109,9 +90,9 @@ export default function Body(){
             <div className="main-div">
 
             <div className="filterPanel">
-                {btnAddTask ? <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className={`addTaskbtn btn btn-light btn-sm ${btnAddTaskDisabled ? "disabled" : ""}`}><i className="fa-solid fa-plus"></i> Add Task</button> 
+                {btnAddTask ? <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className={`addTaskbtn btn btn-light btn-sm ${btnAddTaskDisabled ? "disabled" : ""}`}><i className="fa-solid fa-plus"></i> Task</button> 
                             : <button onClick={() => {addNewTaskForm(); setbtnAddTask(!btnAddTask)}} className={`addTaskbtn btn btn-light border-danger btn-sm ${btnAddTaskDisabled ? "disabled" : ""}`}><i className="fa-solid fa-minus"></i> Cancel</button> }
-                <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button>
+                {/* <button className="addTaskbtnX btn btn-light btn-sm"><i className="fa-solid fa-user"></i></button> */}
                 <button className="addTaskbtnX btn btn-light btn-sm">Sort</button>
                 <Searchbar onSearch={searchHandler}/>
             </div>
@@ -130,8 +111,20 @@ export default function Body(){
                 </thead>
             </table>
 
-                {projects.map(pro => 
-                    <Table key={pro.id} project={pro.projectName} projects={projects} tasks={tasks.filter(task => task.project === pro.projectName)} setTasks={setTasks} removeTask={removeTask} getData={getData} taskState={taskState} settaskState={settaskState} btnAddTask={btnAddTask} setbtnAddTask={setbtnAddTask} setbtnAddTaskDisabled={setbtnAddTaskDisabled} />
+                {projects.map(proj => 
+                    <Table key={proj.id} 
+                        project={proj.projectName} 
+                        projects={projects} 
+                        tasks={tasks.filter(task => task.project === proj.projectName)} 
+                        setTasks={setTasks} 
+                        removeTask={removeTask} 
+                        getData={getData} 
+                        taskState={taskState} 
+                        settaskState={settaskState} 
+                        btnAddTask={btnAddTask} 
+                        setbtnAddTask={setbtnAddTask} 
+                        setbtnAddTaskDisabled={setbtnAddTaskDisabled} 
+                    />
                 )}
 
             </div>

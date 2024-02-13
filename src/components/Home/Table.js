@@ -17,11 +17,6 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
     const { user } = useContext(AuthContext)
     const [displayProject, setdisplayProject] = useState("d-block")
 
-    // useEffect(() => {
-    //     if(btnAddTask == false){setdisplayProject("d-block")}
-    //     console.log('mounted');
-    // })
-
     const sendEmail = (e) => {
         const emaildata = {
             service_id: 'service_wv2dldw',
@@ -33,8 +28,7 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
                 'taskName': taskState.taskName,
                 'priority': taskState.priority,
                 'dueDate': taskState.duedate,
-                'mailTo': 'capablanca09@gmail.com',
-                // 'g-recaptcha-response': '03AHJ_ASjnLA214KSNKFJAK12sfKASfehbmfd...'
+                'mailTo': 'maddawid@gmail.com',
             }
         };
         
@@ -52,9 +46,6 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
     }
 
     async function insertTaskData(event){
-        // let keys = Object.keys(taskState)
-        // let newTask = taskState
-        //delete newTask[keys[keys.length - 1]]
         const res = await axios.post(`https://ysana-d79f4-default-rtdb.europe-west1.firebasedatabase.app/tasks.json?auth=${user.accessToken}`, taskState)
         sendEmail()
         settaskState(formTemplate)
@@ -72,7 +63,6 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
 
     function clickEdit(event, task){
         settaskState(task)
-        //sendEmail()
     }
 
     async function updateTask(taskState){
@@ -152,7 +142,6 @@ export default function Table({ project, projects, tasks, removeTask, getData, t
                                                     value={pro.projectName}>
                                                         {pro.projectName}</option>
                                             )}
-                                            {/* <option key="1" value="1">Private</option> */}
                                     </select>
                                 </td>
                                 <td>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react"
 import axios from "axios"
-import Table from "../Body/Table"
+import Table from "../Home/Table"
 import { AuthContext } from "../../App";
 import Searchbar from "../Searchbar/Searchbar";
 import { useNavigate } from "react-router-dom";
